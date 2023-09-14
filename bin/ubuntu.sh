@@ -12,10 +12,7 @@ function main() {
     add-flathub
     install-common-software-flatpak
 
-    # The Snap store is not great, and the Gnome Software application
-    # supports deb, snap and flatpak. So instead that gets installed
-    # and this one removed
-    remove-snap-store
+    remove-unused-software
 }
 
 function ensure-sudo() {
@@ -62,6 +59,7 @@ function install-common-software-flatpak() {
         org.gnome.Evince
         org.gnome.gitg
         org.libreoffice.LibreOffice
+        org.mozilla.firefox
     )
     readonly software
 
@@ -74,8 +72,16 @@ function add-flathub() {
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 }
 
-function remove-snap-store() {
+function remove-unused-software() {
+    # The Snap store is not great, and the Gnome Software application
+    # supports deb, snap and flatpak. So instead that gets installed
+    # and this one removed
     sudo snap remove --purge snap-store
+
+    # At this point I think using Firefox from Flatpak (previously
+    # installed) will be better from Snap as the settings are more
+    # accessible from Flatseal
+    sudo snap remove --purge firefox
 }
 
 main "$@"
