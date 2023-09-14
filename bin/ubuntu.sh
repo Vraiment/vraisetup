@@ -47,7 +47,7 @@ function install-common-software-apt() {
 
 function install-common-software-snap() {
     sudo snap install code --classic
-    snap install spotify
+    sudo snap install spotify
 }
 
 function install-common-software-flatpak() {
