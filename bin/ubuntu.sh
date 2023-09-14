@@ -18,8 +18,8 @@ function main() {
 function ensure-sudo() {
     # First remove the timestamp and then ask for the sudo password once
     # this will make it so later calls will have credentials figured out
-    /bin/sudo --remove-timestamp
-    /bin/sudo /bin/true
+    /usr/bin/sudo --remove-timestamp
+    /usr/bin/sudo /usr/bin/true
 }
 
 function install-common-software-apt() {
@@ -41,13 +41,13 @@ function install-common-software-apt() {
     )
     readonly software
 
-    sudo apt update
-    sudo apt install --assume-yes "${software[@]}"
+    /usr/bin/sudo /usr/bin/apt update
+    /usr/bin/sudo /usr/bin/apt install --assume-yes "${software[@]}"
 }
 
 function install-common-software-snap() {
-    sudo snap install code --classic
-    sudo snap install spotify
+    /usr/bin/sudo /usr/bin/snap install code --classic
+    /usr/bin/sudo /usr/bin/snap install spotify
 }
 
 function install-common-software-flatpak() {
@@ -68,23 +68,23 @@ function install-common-software-flatpak() {
 
     # Install system wide with sudo, this is because I don't want to use home
     # directory storage on flatpak applications
-    sudo flatpak install --system --assumeyes "${software[@]}"
+    /usr/bin/sudo /usr/bin/flatpak install --system --assumeyes "${software[@]}"
 }
 
 function add-flathub() {
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    /usr/bin/flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 }
 
 function remove-unused-software() {
     # The Snap store is not great, and the Gnome Software application
     # supports deb, snap and flatpak. So instead that gets installed
     # and this one removed
-    sudo snap remove --purge snap-store
+    /usr/bin/sudo /usr/bin/snap remove --purge snap-store
 
     # At this point I think using Firefox from Flatpak (previously
     # installed) will be better from Snap as the settings are more
     # accessible from Flatseal
-    sudo snap remove --purge firefox
+    /usr/bin/sudo /usr/bin/snap remove --purge firefox
 }
 
 main "$@"
