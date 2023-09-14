@@ -1,0 +1,14 @@
+[:ca0d0590-c1a8-4247-9fb9-00f00a78b6cd]
+foreground-color='rgb(155,162,177)'
+visible-name='VraiTerminal'
+palette=['rgb(0,0,0)', 'rgb(217,61,43)', 'rgb(64,200,43)', 'rgb(177,177,42)', 'rgb(100,44,254)', 'rgb(231,50,229)', 'rgb(62,192,205)', 'rgb(203,203,203)', 'rgb(0,0,0)', 'rgb(217,61,43)', 'rgb(64,200,43)', 'rgb(177,177,42)', 'rgb(100,44,254)', 'rgb(231,50,229)', 'rgb(62,192,205)', 'rgb(203,203,203)']
+cursor-colors-set=false
+highlight-colors-set=false
+use-theme-colors=false
+bold-color-same-as-fg=false
+bold-color='rgb(255,255,255)'
+background-color='rgb(31,33,39)'
+
+[/]
+list=['ca0d0590-c1a8-4247-9fb9-00f00a78b6cd']
+default='ca0d0590-c1a8-4247-9fb9-00f00a78b6cd'

@@ -13,6 +13,8 @@ function main() {
     install-common-software-flatpak
 
     remove-unused-software
+
+    setup-gnome-terminal-profile
 }
 
 function ensure-sudo() {
@@ -85,6 +87,10 @@ function remove-unused-software() {
     # installed) will be better from Snap as the settings are more
     # accessible from Flatseal
     /usr/bin/sudo /usr/bin/snap remove --purge firefox
+}
+
+function setup-gnome-terminal-profile() {
+    /usr/bin/dconf load /org/gnome/terminal/legacy/profiles:/ < "$(dirname -- "${BASH_SOURCE[0]}")"/../etc/VraiTerminal.dconf
 }
 
 main "$@"
