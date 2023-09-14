@@ -16,7 +16,10 @@ function main() {
 }
 
 function ensure-sudo() {
-    /bin/sudo --reset-timestamp /bin/true
+    # First remove the timestamp and then ask for the sudo password once
+    # this will make it so later calls will have credentials figured out
+    /bin/sudo --remove-timestamp
+    /bin/sudo /bin/true
 }
 
 function install-common-software-apt() {
