@@ -66,11 +66,17 @@ function install-common-software-flatpak() {
         com.github.tchx84.Flatseal
         io.missioncenter.MissionCenter
         org.gimp.GIMP
+        org.gnome.baobab
         org.gnome.Boxes
+        org.gnome.Characters
         org.gnome.Cheese
+        org.gnome.eog
         org.gnome.Evince
         org.gnome.Extensions
+        # org.gnome.FileRoller File Roller is part of the Ubuntu Desktop package
         org.gnome.gitg
+        org.gnome.Logs
+        org.gnome.TextEditor
         org.libreoffice.LibreOffice
         org.mozilla.firefox
     )
@@ -86,6 +92,8 @@ function add-flathub() {
 }
 
 function remove-unused-software() {
+    local apt_packages
+
     # The Snap store is not great, and the Gnome Software application
     # supports deb, snap and flatpak. So instead that gets installed
     # and this one removed
@@ -97,7 +105,17 @@ function remove-unused-software() {
     /usr/bin/sudo /usr/bin/snap remove --purge firefox
 
     # For this software the flatpak version is installed instead
-    /usr/bin/sudo /usr/bin/apt autoremove --purge --assume-yes evince
+    apt_packages=(
+        evince
+        eog
+        # file-roller File Roller is considered part of the Ubuntu Desktop
+        gedit
+        gnome-characters
+        gnome-logs
+    )
+    readonly apt_packages
+
+    /usr/bin/sudo /usr/bin/apt autoremove --purge --assume-yes "${apt_packages[@]}"
 }
 
 function install-gnome-extensions() {
