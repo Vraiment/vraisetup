@@ -87,6 +87,9 @@ function remove-unused-software() {
     # installed) will be better from Snap as the settings are more
     # accessible from Flatseal
     /usr/bin/sudo /usr/bin/snap remove --purge firefox
+
+    # For this software the flatpak version is installed instead
+    /usr/bin/sudo /usr/bin/apt autoremove --purge --assume-yes evince
 }
 
 function setup-gnome-terminal-profile() {
