@@ -74,7 +74,7 @@ function install-common-software-flatpak() {
 }
 
 function add-flathub() {
-    /usr/bin/flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    /usr/bin/sudo /usr/bin/flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 }
 
 function remove-unused-software() {
