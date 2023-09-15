@@ -4,8 +4,13 @@ set -e # Exit immediately if a command exits with a non-zero status.
 set -o pipefail # Propagate exit code on a pipeline
 set -x # Print commands and their arguments as they are executed.
 
+data_dir="$HOME"/.local/share/vraisetup/data
+readonly data_dir
+
 function main() {
     ensure-sudo
+
+    /usr/bin/mkdir --parents "$data_dir"
 
     install-common-software-apt
     install-common-software-snap
@@ -14,6 +19,8 @@ function main() {
 
     remove-unused-software
 
+    install-gnome-extensions
+    setup-gnome-settings
     setup-gnome-terminal-profile
 }
 
@@ -62,6 +69,7 @@ function install-common-software-flatpak() {
         org.gnome.Boxes
         org.gnome.Cheese
         org.gnome.Evince
+        org.gnome.Extensions
         org.gnome.gitg
         org.libreoffice.LibreOffice
         org.mozilla.firefox
@@ -90,6 +98,70 @@ function remove-unused-software() {
 
     # For this software the flatpak version is installed instead
     /usr/bin/sudo /usr/bin/apt autoremove --purge --assume-yes evince
+}
+
+function install-gnome-extensions() {
+    # All this installation omits the `gnome-extensions` command as it requires
+    # the gnome session running restarted to work
+    local extensions extension extension_dir
+
+    # These versions were manually selected from the UI to match the Gnome version in Ubuntu 22.04
+    # hence they are hardcoded, they can be updated from the UI or via this script by changing 
+    # the values
+    extensions=(
+        gsconnectandyholmes.github.io.v50.shell-extension.zip
+        bluetooth-quick-connectbjarosze.gmail.com.v34.shell-extension.zip
+        weeks-start-on-mondayextensions.gnome-shell.fifi.org.v13.shell-extension.zip
+    )
+    readonly extensions
+
+    extension_dir="$HOME"/.local/share/gnome-shell/extensions
+    readonly extension_dir
+
+    # Downloaded extensions get stored in the setup data dir
+    /usr/bin/mkdir --parents "$data_dir"/extensions "$extension_dir"
+
+    for extension in "${extensions[@]}"; do
+        /usr/bin/curl --output-dir "$data_dir"/extensions --remote-name https://extensions.gnome.org/extension-data/"$extension"
+        /usr/bin/gnome-extensions install "$data_dir"/extensions/"$extension"
+    done
+
+    # Enable the extensions by setting the values on gsettings directly rather than via `gnome-extensions`
+    # as the later requires a session reboot for it to work
+    /usr/bin/gsettings set org.gnome.shell enabled-extensions \
+        "['bluetooth-quick-connect@bjarosze.gmail.com', 'gsconnect@andyholmes.github.io', 'weeks-start-on-monday@extensions.gnome-shell.fifi.org']" && sleep 1
+}
+
+function setup-gnome-settings() {
+    # These seem to be exclusive to Ubuntu (maybe even Ubuntu 22.04)
+    # Wait for 1 second after each invocation as there is a slight delay before the settings
+    # get applied, otherwise the ones after the first one won't get applied
+
+    # Reset the layout of the app grid
+    /usr/bin/gsettings reset org.gnome.shell app-picker-layout && sleep 1
+
+    # Set dark theme
+    /usr/bin/gsettings set org.gnome.desktop.interface color-scheme prefer-dark && sleep 1
+    /usr/bin/gsettings set org.gnome.desktop.interface gtk-theme Yaru-blue-dark && sleep 1
+    /usr/bin/gsettings set org.gnome.desktop.interface icon-theme Yaru-blue && sleep 1
+
+    # Enable hot corners
+    /usr/bin/gsettings set org.gnome.desktop.interface enable-hot-corners true && sleep 1
+
+    # Configure dock: auto hide, show at bottom, do not fill the screen
+    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false && sleep 1
+    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM && sleep 1
+    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false && sleep 1
+
+    # Configure desktop icons
+    /usr/bin/gsettings set org.gnome.shell.extensions.ding start-corner top-left && sleep 1
+
+    # Compose key allows to write tildes and the like
+    /usr/bin/gsettings set org.gnome.desktop.input-sources xkb-options "['compose:rctrl']" && sleep 1
+
+    # Keyboard shortcuts
+    /usr/bin/gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']" && sleep 1
+    /usr/bin/gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']" && sleep 1
 }
 
 function setup-gnome-terminal-profile() {
