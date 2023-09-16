@@ -4,6 +4,11 @@ set -e # Exit immediately if a command exits with a non-zero status.
 set -o pipefail # Propagate exit code on a pipeline
 set -x # Print commands and their arguments as they are executed.
 
+# Setup root is defined as the absolute path (`readlink`) of the
+# parent of the directory (`dirname`) of the current script (`${BASH_SOURCE[0]}`)
+setup_root="$(readlink -f "$(dirname -- "${BASH_SOURCE[0]}")"/..)"
+readonly setup_root
+
 data_dir="$HOME"/.local/share/vraisetup/data
 readonly data_dir
 
@@ -34,6 +39,8 @@ function ensure-sudo() {
 function install-common-software-apt() {
     local software
 
+    configure-extra-apt-repositories
+
     software=(
         curl
         flatpak
@@ -45,6 +52,7 @@ function install-common-software-apt() {
         gnome-tweaks
         hunspell-es # Spanish dictionary
         shellcheck
+        signal-desktop
         vim
         wl-clipboard # Copy&paste in the terminal
     )
@@ -52,6 +60,18 @@ function install-common-software-apt() {
 
     /usr/bin/sudo /usr/bin/apt update
     /usr/bin/sudo /usr/bin/apt install --assume-yes "${software[@]}"
+}
+
+function configure-extra-apt-repositories() {
+    # First configure Signal, see the README on the Signal dir
+
+    # Do this weird `cat $SOURCE | sudo tee $DEST > /dev/null` to ensure
+    # the target has default root permission
+    /usr/bin/cat "$setup_root"/etc/signal/signal-desktop-keyring.gpg | \
+        /usr/bin/sudo /usr/bin/tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
+
+    /usr/bin/cat "$setup_root"/etc/signal/signal-xenial.list | \
+        /usr/bin/sudo /usr/bin/tee /etc/apt/sources.list.d/signal-xenial.list > /dev/null
 }
 
 function install-common-software-snap() {
@@ -183,7 +203,7 @@ function setup-gnome-settings() {
 }
 
 function setup-gnome-terminal-profile() {
-    /usr/bin/dconf load /org/gnome/terminal/legacy/profiles:/ < "$(dirname -- "${BASH_SOURCE[0]}")"/../etc/VraiTerminal.dconf
+    /usr/bin/dconf load /org/gnome/terminal/legacy/profiles:/ < "$setup_root"/etc/VraiTerminal.dconf
 }
 
 main "$@"
