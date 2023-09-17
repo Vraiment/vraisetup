@@ -95,13 +95,14 @@ function configure-extra-apt-repositories() {
 
 function install-common-software-snap() {
     /usr/bin/sudo /usr/bin/snap install code --classic
-    /usr/bin/sudo /usr/bin/snap install spotify
+    /usr/bin/sudo /usr/bin/snap install spotify vlc
 }
 
 function install-common-software-flatpak() {
     local software
 
     software=(
+        com.github.PintaProject.Pinta
         com.github.tchx84.Flatseal
         io.missioncenter.MissionCenter
         org.gimp.GIMP
