@@ -64,27 +64,33 @@ function install-common-software-apt() {
 }
 
 function configure-extra-apt-repositories() {
-    # For all of these I use this weird `cat $SOURCE | sudo tee $DEST > /dev/null`
-    # to ensure the target has default root permission
+    # Use --no-preserve=mode,ownership,timestmap to ensure the
+    # permissions of the files are root's and not the current user
 
     # First configure Signal, see the README on the Signal dir
-    /usr/bin/cat "$setup_root"/etc/signal/signal-desktop-keyring.gpg | \
-        /usr/bin/sudo /usr/bin/tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
-    /usr/bin/cat "$setup_root"/etc/signal/signal-xenial.list | \
-        /usr/bin/sudo /usr/bin/tee /etc/apt/sources.list.d/signal-xenial.list > /dev/null
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/signal/signal-desktop-keyring.gpg \
+        /usr/share/keyrings/signal-desktop-keyring.gpg
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/signal/signal-xenial.list \
+        /etc/apt/sources.list.d/signal-xenial.list
 
     # Configure 1Password, see the README on the 1Password dir
-    /usr/bin/cat "$setup_root"/etc/1password/1password-archive-keyring.gpg | \
-        /usr/bin/sudo /usr/bin/tee /usr/share/keyrings/1password-archive-keyring.gpg > /dev/null
-    /usr/bin/cat "$setup_root"/etc/1password/1password.list | \
-        /usr/bin/sudo /usr/bin/tee /etc/apt/sources.list.d/1password.list > /dev/null
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/1password/1password-archive-keyring.gpg \
+        /usr/share/keyrings/1password-archive-keyring.gpg
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/1password/1password.list \
+        /etc/apt/sources.list.d/1password.list
     # Configure debsig-verify policy for 1Password
     /usr/bin/sudo /usr/bin/mkdir --parents /etc/debsig/policies/AC2D62742012EA22
-    /usr/bin/cat "$setup_root"/etc/1password/1password.pol | \
-        /usr/bin/sudo /usr/bin/tee /etc/debsig/policies/AC2D62742012EA22/1password.pol > /dev/null
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/1password/1password.pol \
+        /etc/debsig/policies/AC2D62742012EA22/1password.pol
     /usr/bin/sudo /usr/bin/mkdir --parents /usr/share/debsig/keyrings/AC2D62742012EA22
-    /usr/bin/cat "$setup_root"/etc/1password/1password-archive-keyring.gpg | \
-        /usr/bin/sudo /usr/bin/tee /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg > /dev/null
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/1password/1password-archive-keyring.gpg \
+        /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
 }
 
 function install-common-software-snap() {
