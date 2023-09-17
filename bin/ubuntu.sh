@@ -42,6 +42,7 @@ function install-common-software-apt() {
     configure-extra-apt-repositories
 
     software=(
+        1password
         curl
         flatpak
         git
@@ -63,15 +64,27 @@ function install-common-software-apt() {
 }
 
 function configure-extra-apt-repositories() {
-    # First configure Signal, see the README on the Signal dir
+    # For all of these I use this weird `cat $SOURCE | sudo tee $DEST > /dev/null`
+    # to ensure the target has default root permission
 
-    # Do this weird `cat $SOURCE | sudo tee $DEST > /dev/null` to ensure
-    # the target has default root permission
+    # First configure Signal, see the README on the Signal dir
     /usr/bin/cat "$setup_root"/etc/signal/signal-desktop-keyring.gpg | \
         /usr/bin/sudo /usr/bin/tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
-
     /usr/bin/cat "$setup_root"/etc/signal/signal-xenial.list | \
         /usr/bin/sudo /usr/bin/tee /etc/apt/sources.list.d/signal-xenial.list > /dev/null
+
+    # Configure 1Password, see the README on the 1Password dir
+    /usr/bin/cat "$setup_root"/etc/1password/1password-archive-keyring.gpg | \
+        /usr/bin/sudo /usr/bin/tee /usr/share/keyrings/1password-archive-keyring.gpg > /dev/null
+    /usr/bin/cat "$setup_root"/etc/1password/1password.list | \
+        /usr/bin/sudo /usr/bin/tee /etc/apt/sources.list.d/1password.list > /dev/null
+    # Configure debsig-verify policy for 1Password
+    /usr/bin/sudo /usr/bin/mkdir --parents /etc/debsig/policies/AC2D62742012EA22
+    /usr/bin/cat "$setup_root"/etc/1password/1password.pol | \
+        /usr/bin/sudo /usr/bin/tee /etc/debsig/policies/AC2D62742012EA22/1password.pol > /dev/null
+    /usr/bin/sudo /usr/bin/mkdir --parents /usr/share/debsig/keyrings/AC2D62742012EA22
+    /usr/bin/cat "$setup_root"/etc/1password/1password-archive-keyring.gpg | \
+        /usr/bin/sudo /usr/bin/tee /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg > /dev/null
 }
 
 function install-common-software-snap() {
