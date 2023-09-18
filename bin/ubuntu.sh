@@ -136,7 +136,7 @@ function install-common-software-flatpak() {
 # *officially* distributed via `apt`, `flatpak`  or `snap` and need to
 # be downloaded and installed manually.
 function install-orphan-software() {
-    local deb_dir discord_deb naps2_deb simplenote_deb
+    local deb_dir discord_deb naps2_deb simplenote_deb steam_deb
 
     deb_dir="$data_dir"/deb
     readonly deb_dir
@@ -168,6 +168,17 @@ function install-orphan-software() {
         https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/"$simplenote_deb" \
         b3ba6bff0ae5f30d8ef0d7ed60a4f3b95e18fb16856dcbbbb12fcb39122c4aef \
         "$deb_dir"/"$simplenote_deb"
+
+    # Install Steam, sha256sum calculated Sept 17th, 2023
+    # Valve publishes the deb to the Steam page as `steam_latest.deb`
+    # but the repository is browsable and has links to all of the
+    # versions
+    steam_deb=steam-launcher_1.0.0.78_all.deb
+    readonly steam_deb
+    install-orphan-deb \
+        https://repo.steampowered.com/steam/archive/precise/"$steam_deb" \
+        456c200c00f7cae57db06d2067fbdb1fa3727eb6744371827913c4cf82d507a0 \
+        "$deb_dir"/"$steam_deb"
 }
 
 function install-orphan-deb() {
