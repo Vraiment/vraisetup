@@ -28,6 +28,7 @@ function main() {
     install-gnome-extensions
     setup-gnome-settings
     setup-gnome-terminal-profile
+    setup-flatpak-applications
 }
 
 function ensure-sudo() {
@@ -118,6 +119,7 @@ function install-common-software-flatpak() {
         org.gnome.gitg
         org.gnome.Logs
         org.gnome.TextEditor
+        org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22 # The default Yaru version installed is 3.22
         org.libreoffice.LibreOffice
         org.mozilla.firefox
     )
@@ -294,6 +296,24 @@ function setup-gnome-settings() {
 
 function setup-gnome-terminal-profile() {
     /usr/bin/dconf load /org/gnome/terminal/legacy/profiles:/ < "$setup_root"/etc/VraiTerminal.dconf
+}
+
+function setup-flatpak-applications() {
+    local flatpaks_with_custom_theme
+
+    # These applications do not match the theme out of the box and need to be manually forced
+    # to the closest onet
+    flatpaks_with_custom_theme=(
+        com.github.PintaProject.Pinta
+        org.gnome.Cheese
+        org.libreoffice.LibreOffice
+        org.mozilla.firefox
+    )
+    readonly flatpaks_with_custom_theme
+
+    for flatpak_with_custom_theme in "${flatpaks_with_custom_theme[@]}"; do
+        /usr/bin/flatpak override --user --env=GTK_THEME=Yaru-Blue-dark "$flatpak_with_custom_theme"
+    done
 }
 
 main "$@"
