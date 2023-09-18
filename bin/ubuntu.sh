@@ -114,13 +114,16 @@ function install-common-software-flatpak() {
         org.gnome.Boxes
         org.gnome.Characters
         org.gnome.Cheese
+        org.gnome.clocks
         org.gnome.eog
         org.gnome.Evince
         org.gnome.Extensions
         # org.gnome.FileRoller File Roller is part of the Ubuntu Desktop package
         org.gnome.gitg
         org.gnome.Logs
+        org.gnome.Maps
         org.gnome.TextEditor
+        org.gnome.Weather
         org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22 # The default Yaru version installed is 3.22
         org.libreoffice.LibreOffice
         org.mozilla.firefox
