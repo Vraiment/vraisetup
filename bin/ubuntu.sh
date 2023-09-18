@@ -21,6 +21,7 @@ function main() {
     install-common-software-snap
     add-flathub
     install-common-software-flatpak
+    install-orphan-software
 
     remove-unused-software
 
@@ -125,6 +126,75 @@ function install-common-software-flatpak() {
     # Install system wide with sudo, this is because I don't want to use home
     # directory storage on flatpak applications
     /usr/bin/sudo /usr/bin/flatpak install --system --assumeyes "${software[@]}"
+}
+
+# "Orphan" software in this context referts to applications that are not
+# *officially* distributed via `apt`, `flatpak`  or `snap` and need to
+# be downloaded and installed manually.
+function install-orphan-software() {
+    local deb_dir discord_deb naps2_deb simplenote_deb
+
+    deb_dir="$data_dir"/deb
+    readonly deb_dir
+
+    /usr/bin/mkdir --parents "$deb_dir"
+
+    # Install Discord, sha256sum calculated Sept 17th, 2023
+    discord_deb=discord-0.0.29.deb
+    readonly discord_deb
+    install-orphan-deb \
+        https://dl.discordapp.net/apps/linux/0.0.29/"$discord_deb" \
+        55f1e92dfa72f6da713b356580b1fefaf9a0b9018d1d1a37b4d3f0b42ad7fffa \
+        "$deb_dir"/"$discord_deb"
+
+    # Install NAPS2, sha256sum calculated Sept 17th, 2023
+    # NAPS2 it's also offered as a Flatpak but given the USB limitations with Flatpak
+    # that version is literally useless.
+    naps2_deb=naps2-7.1.0-linux-x64.deb
+    readonly naps2_deb
+    install-orphan-deb \
+        https://github.com/cyanfish/naps2/releases/download/v7.1.0/"$naps2_deb" \
+        642ed69cb8ae7d9d89d03451008a014e9b54f341d4dc781718f5317b60bc08cc \
+        "$deb_dir"/"$naps2_deb"
+
+    # Install Simplenote, sha256sum calculated Sept 17th, 2023
+    simplenote_deb=Simplenote-linux-2.21.0-amd64.deb
+    readonly simplenote_deb
+    install-orphan-deb \
+        https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/"$simplenote_deb" \
+        b3ba6bff0ae5f30d8ef0d7ed60a4f3b95e18fb16856dcbbbb12fcb39122c4aef \
+        "$deb_dir"/"$simplenote_deb"
+}
+
+function install-orphan-deb() {
+    local deb_url deb_sum deb_path package_name package_new_version package_old_version
+
+    deb_url="$1"
+    readonly deb_url
+
+    deb_sum="$2"
+    readonly deb_sum
+
+    deb_path="$3"
+    readonly deb_path
+
+    # Download the deb and check its signature
+    /usr/bin/curl --output "$deb_path" --location "$deb_url"
+    echo "$deb_sum" "$deb_path" | /usr/bin/sha256sum --check
+
+    package_name="$(/usr/bin/dpkg --field "$deb_path" Package)"
+    readonly package_name
+
+    package_new_version="$(/usr/bin/dpkg --field "$deb_path" Version)"
+    readonly package_new_version
+
+    package_old_version=$(dpkg-query --showformat='${Version}' --show "$package_name" || echo '')
+    readonly package_old_version
+
+    # An empty "$package_old_version" means the package hasn't been installed
+    if [[ -z "$package_old_version" ]] || /usr/bin/dpkg --compare-versions "$package_new_version" gt "$package_old_version"; then
+        /usr/bin/sudo /usr/bin/apt install --assume-yes "$deb_path"
+    fi
 }
 
 function add-flathub() {
