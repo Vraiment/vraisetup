@@ -192,7 +192,7 @@ function install-orphan-deb() {
     package_new_version="$(/usr/bin/dpkg --field "$deb_path" Version)"
     readonly package_new_version
 
-    package_old_version=$(dpkg-query --showformat='${Version}' --show "$package_name" || echo '')
+    package_old_version=$(/usr/bin/dpkg-query --showformat='${Version}' --show "$package_name" || echo '')
     readonly package_old_version
 
     # An empty "$package_old_version" means the package hasn't been installed
