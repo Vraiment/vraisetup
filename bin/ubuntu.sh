@@ -62,6 +62,8 @@ function install-common-software-apt() {
     readonly software
 
     /usr/bin/sudo /usr/bin/apt update
+    /usr/bin/sudo /usr/bin/apt upgrade --assume-yes
+    /usr/bin/sudo /usr/bin/apt autoremove --assume-yes
     /usr/bin/sudo /usr/bin/apt install --assume-yes "${software[@]}"
 }
 
