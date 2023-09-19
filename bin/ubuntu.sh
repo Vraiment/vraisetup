@@ -26,6 +26,7 @@ function main() {
     remove-unused-software
 
     install-gnome-extensions
+    setup-command-line
     setup-gnome-settings
     setup-gnome-terminal-profile
     setup-flatpak-applications
@@ -276,6 +277,10 @@ function install-gnome-extensions() {
     # as the later requires a session reboot for it to work
     /usr/bin/gsettings set org.gnome.shell enabled-extensions \
         "['bluetooth-quick-connect@bjarosze.gmail.com', 'gsconnect@andyholmes.github.io', 'weeks-start-on-monday@extensions.gnome-shell.fifi.org']" && sleep 1
+}
+
+function setup-command-line() {
+    /usr/bin/ln --symbolic --force --backup=numbered "$setup_root"/etc/vimrc "$HOME"/.vimrc
 }
 
 function setup-gnome-settings() {
