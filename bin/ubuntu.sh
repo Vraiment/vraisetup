@@ -26,6 +26,7 @@ function main() {
     remove-unused-software
 
     install-gnome-extensions
+    install-scripting-runtimes
     setup-command-line
     setup-gnome-settings
     setup-gnome-terminal-profile
@@ -277,6 +278,47 @@ function install-gnome-extensions() {
     # as the later requires a session reboot for it to work
     /usr/bin/gsettings set org.gnome.shell enabled-extensions \
         "['bluetooth-quick-connect@bjarosze.gmail.com', 'gsconnect@andyholmes.github.io', 'weeks-start-on-monday@extensions.gnome-shell.fifi.org']" && sleep 1
+}
+
+function install-scripting-runtimes() {
+    # sha256sum calculated Sept 23th, 2023
+    install-from-github \
+        https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh \
+        69da4f89f430cd5d6e591c2ccfa2e9e3ad55564ba60f651f00da85e04010c640
+
+    # sha256sum calculated Sept 23th, 2023
+    install-from-github \
+        https://raw.githubusercontent.com/rbenv/rbenv-installer/33926644327c067be973c8e1c6c4f5c2178d4ead/bin/rbenv-installer \
+        e5fe1edc05d827bc87f7ea9724b19632cc68bff10a04912bfd1017385f22f2fb
+}
+
+function install-from-github() {
+    local url sha256sum install_script
+
+    url="$1"
+    readonly url
+
+    sha256sum="$2"
+    readonly sha256sum
+
+    install_script="$(mktemp)"
+    readonly install_script
+
+    /usr/bin/curl \
+        --fail \
+        --output "$install_script" \
+        --silent \
+        --show-error \
+        --location "$url"
+
+    if ! echo "$sha256sum" "$install_script" | /usr/bin/sha256sum --check; then
+        >&2 echo Validation for "$url" failed
+        exit 1
+    fi
+
+    # `nvm` suggest setting `PROFILE` to `/dev/null` to prevent the script modifying
+    # shell scripts, my guess is this is a general hack and not specific to `nvm`
+    PROFILE=/dev/null /usr/bin/bash "$install_script"
 }
 
 function setup-command-line() {
