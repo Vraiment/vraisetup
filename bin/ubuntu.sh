@@ -100,8 +100,11 @@ function configure-extra-apt-repositories() {
 }
 
 function install-common-software-snap() {
+    # Each snap must be installed separately
+    # otherwise reruning the command will fail
     /usr/bin/sudo /usr/bin/snap install code --classic
-    /usr/bin/sudo /usr/bin/snap install spotify vlc
+    /usr/bin/sudo /usr/bin/snap install spotify
+    /usr/bin/sudo /usr/bin/snap install vlc
 }
 
 function install-common-software-flatpak() {
@@ -271,7 +274,7 @@ function install-gnome-extensions() {
 
     for extension in "${extensions[@]}"; do
         /usr/bin/curl --output-dir "$data_dir"/extensions --remote-name https://extensions.gnome.org/extension-data/"$extension"
-        /usr/bin/gnome-extensions install "$data_dir"/extensions/"$extension"
+        /usr/bin/gnome-extensions install --force "$data_dir"/extensions/"$extension"
     done
 
     # Enable the extensions by setting the values on gsettings directly rather than via `gnome-extensions`
