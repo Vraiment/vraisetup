@@ -27,6 +27,8 @@ function main() {
 
     install-gnome-extensions
     install-scripting-runtimes
+    install-webapps
+
     setup-command-line
     setup-gnome-settings
     setup-gnome-terminal-profile
@@ -293,6 +295,10 @@ function install-scripting-runtimes() {
     install-from-github \
         https://raw.githubusercontent.com/rbenv/rbenv-installer/33926644327c067be973c8e1c6c4f5c2178d4ead/bin/rbenv-installer \
         e5fe1edc05d827bc87f7ea9724b19632cc68bff10a04912bfd1017385f22f2fb
+}
+
+function install-webapps() {
+    "$setup_root"/bin/nativefy.sh WhatsApp https://web.whatsapp.com
 }
 
 function install-from-github() {
