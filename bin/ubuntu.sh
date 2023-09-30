@@ -146,20 +146,20 @@ function install-common-software-flatpak() {
 # *officially* distributed via `apt`, `flatpak`  or `snap` and need to
 # be downloaded and installed manually.
 function install-orphan-software() {
-    local deb_dir discord_deb naps2_deb simplenote_deb steam_deb
+    local deb_dir discord_version naps2_deb simplenote_deb steam_deb
 
     deb_dir="$data_dir"/deb
     readonly deb_dir
 
     /usr/bin/mkdir --parents "$deb_dir"
 
-    # Install Discord, sha256sum calculated Sept 17th, 2023
-    discord_deb=discord-0.0.29.deb
-    readonly discord_deb
+    # Install Discord, sha256sum calculated Sept 29th, 2023
+    discord_version=0.0.30
+    readonly discord_version
     install-orphan-deb \
-        https://dl.discordapp.net/apps/linux/0.0.29/"$discord_deb" \
-        55f1e92dfa72f6da713b356580b1fefaf9a0b9018d1d1a37b4d3f0b42ad7fffa \
-        "$deb_dir"/"$discord_deb"
+        https://dl.discordapp.net/apps/linux/"$discord_version"/discord-"$discord_version".deb \
+        4a59823227cd75c559fad039e662d905626ca6ad2959d60778670a089ff1ec60 \
+        "$deb_dir"/discord-"$discord_version".deb
 
     # Install NAPS2, sha256sum calculated Sept 17th, 2023
     # NAPS2 it's also offered as a Flatpak but given the USB limitations with Flatpak
