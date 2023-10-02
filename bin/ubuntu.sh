@@ -36,6 +36,8 @@ function main() {
     setup-gnome-settings
     setup-gnome-terminal-profile
     setup-flatpak-applications
+
+    setup-vs-code
 }
 
 function ensure-sudo() {
@@ -424,6 +426,39 @@ function setup-flatpak-applications() {
     for flatpak_with_custom_theme in "${flatpaks_with_custom_theme[@]}"; do
         /usr/bin/flatpak override --user --env=GTK_THEME=Yaru-Blue-dark "$flatpak_with_custom_theme"
     done
+}
+
+function setup-vs-code() {
+    local extension extensions vscode_user_dir
+
+    extensions=(
+        # UI Theme
+        akamud.vscode-theme-onedark
+        # Icon Theme
+        emmanuelbeziat.vscode-great-icons
+        # Pretty/Minify JSON
+        eriklynd.json-tools
+        # URL Encode/Decode
+        flesler.url-encode
+    )
+    readonly extensions
+
+    for extension in "${extensions[@]}"; do
+        /snap/bin/code --install-extension "$extension" --force
+    done
+
+    vscode_user_dir="$HOME"/.config/Code/User
+    readonly vscode_user_dir
+
+    /usr/bin/mkdir --parents "$vscode_user_dir"
+
+    /usr/bin/ln --symbolic --force --backup=numbered \
+        "$setup_root"/etc/vscode/keybindings.jsonc \
+        "$vscode_user_dir"/keybindings.json
+
+    /usr/bin/ln --symbolic --force --backup=numbered \
+        "$setup_root"/etc/vscode/settings.jsonc \
+        "$vscode_user_dir"/settings.json
 }
 
 main "$@"
