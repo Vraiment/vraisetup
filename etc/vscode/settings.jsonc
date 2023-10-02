@@ -1,0 +1,64 @@
+{
+    // Controls whether the Find Widget should add extra lines on top of the
+    // editor.
+    // Set to `false` because the disconcerting for the content to move when
+    // searching or replacing something, plus it wastes space.
+    "editor.find.addExtraSpaceOnTop": false,
+    // Controls whether the minimap is shown.
+    // Set to `false` because I don't really use it and is wasted space.
+    "editor.minimap.enabled": false,
+    // Controls whether the editor should render control characters.
+    // Set to `true` because is useful to see invisible characters.
+    "editor.renderControlCharacters": true,
+    // Controls how the editor should render whitespace characters.
+    // Set to `all` because is useful to see invisible characters.
+    "editor.renderWhitespace": "all",
+    // Render vertical rulers after a certain number of monospace characters.
+    // Set to `80` and `120` because they are kind of the standard.
+    "editor.rulers": [
+        80,
+        120
+    ],
+    // Controls whether the editor will scroll beyond the last line.
+    // Set to `false` because is extremely annoying.
+    "editor.scrollBeyondLastLine": false,
+    // Controls the wrapping column of the editor when `editor.wordWrap` is 
+    // `wordWrapColumn` or `bounded`.
+    // Set to `120` because that's the max "kind of" standard.
+    "editor.wordWrapColumn": 120,
+    // Controls whether the Explorer should automatically reveal and select
+    // files when opening them.
+    // Set to `false` because is extremely annoying to have them open.
+    "explorer.autoReveal": false,
+    // Controls Visual Studio Code telemetry, first-party extension telemetry,
+    // and participating third-party extension telemetry. Some third party
+    // extensions might not respect this setting.
+    // Set to `false` because lol.
+    "telemetry.telemetryLevel": "off",
+    // Dispatches most keybindings to the terminal instead of the workbench,
+    // overriding `terminal.integrated.commandsToSkipShell`, which can be used
+    // alternatively for fine tuning.
+    // Set to `true` so keybindings like `cltr+e` work on the built in terminal.
+    "terminal.integrated.sendKeybindingsToShell": true,
+    // Adjust the appearance of the window title bar. On Linux and Windows, this
+    // setting also affects the application and context menu appearances.
+    // Changes require a full restart to apply.
+    // Set to `custom` because it uses better the space and looks nice.
+    "window.titleBarStyle": "custom",
+    // Specifies the color theme used in the workbench.
+    // Set to `Atom One Dark` because I'm used to use Atom.
+    "workbench.colorTheme": "Atom One Dark",
+    // Controls whether opened editors show as preview editors. Preview editors
+    // do not stay open, are reused until explicitly set to be kept open (via
+    // double-click or editing), and show file names in italics.
+    // Set to `false` because this is beyond annoying.
+    "workbench.editor.enablePreview": false,
+    // Specifies the file icon theme used in the workbench or 'null' to not show
+    // any file icons.
+    // Set to `vscode-great-icons` because they look beyond better.
+    "workbench.iconTheme": "vscode-great-icons",
+    // Controls which editor is shown at startup, if none are restored from the
+    // previous session.
+    // Set to `none` because I want to decide what to open.
+    "workbench.startupEditor": "none"
+}

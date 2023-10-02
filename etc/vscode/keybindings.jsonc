@@ -1,0 +1,122 @@
+// Place your key bindings in this file to override the defaults
+[
+    // use "sane" tab switching ("ctrl+tab" and "ctrl+shift+tab")
+    {
+        "key": "ctrl+tab",
+        "command": "workbench.action.nextEditorInGroup"
+    },
+    {
+        "key": "ctrl+k ctrl+pagedown",
+        "command": "-workbench.action.nextEditorInGroup"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.previousEditorInGroup"
+    },
+    {
+        "key": "ctrl+k ctrl+pageup",
+        "command": "-workbench.action.previousEditorInGroup"
+    },
+    // "cltr+l" opens de selector for the language of the file
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.editor.changeLanguageMode",
+        "when": "!notebookEditorFocused"
+    },
+    {
+        "key": "ctrl+k m",
+        "command": "-workbench.action.editor.changeLanguageMode",
+        "when": "!notebookEditorFocused"
+    },
+    // "ctrl+r" opens search and replace
+    {
+        "key": "ctrl+r",
+        "command": "editor.action.startFindReplaceAction",
+        "when": "editorFocus || editorIsOpen"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "-editor.action.startFindReplaceAction",
+        "when": "editorFocus || editorIsOpen"
+    },
+    /*
+     * Sidebar: show or hide sidebar sections with alt+#
+     *
+     * For simplicity we keep the original shortcuts to show the sections
+     */
+    // "alt+1" shows explorer on the side bar
+    {
+        "key": "alt+1",
+        "command": "workbench.view.explorer",
+        "when": "!sideBarVisible || activeViewlet != 'workbench.view.explorer'"
+    },
+    {
+        "key": "alt+1",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "sideBarVisible && activeViewlet == 'workbench.view.explorer'"
+    },
+    {
+        "key": "alt+1",
+        "command": "-workbench.action.openEditorAtIndex1"
+    },
+    // "alt+2" shows explorer on the side bar
+    {
+        "key": "alt+2",
+        "command": "workbench.view.search",
+        "when": "!sideBarVisible || activeViewlet != 'workbench.view.search'"
+    },
+    {
+        "key": "alt+2",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "sideBarVisible && activeViewlet == 'workbench.view.search'"
+    },
+    {
+        "key": "alt+2",
+        "command": "-workbench.action.openEditorAtIndex2"
+    },
+    // "alt+3" shows explorer on the side bar
+    {
+        "key": "alt+3",
+        "command": "workbench.view.scm",
+        "when": "!sideBarVisible || activeViewlet != 'workbench.view.scm'"
+    },
+    {
+        "key": "alt+3",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "sideBarVisible && activeViewlet == 'workbench.view.scm'"
+    },
+    {
+        "key": "alt+3",
+        "command": "-workbench.action.openEditorAtIndex3"
+    },
+    // "alt+4" shows explorer on the side bar
+    {
+        "key": "alt+4",
+        "command": "workbench.view.debug",
+        "when": "!sideBarVisible || activeViewlet != 'workbench.view.debug'"
+    },
+    {
+        "key": "alt+4",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "sideBarVisible && activeViewlet == 'workbench.view.debug'"
+    },
+    {
+        "key": "alt+4",
+        "command": "-workbench.action.openEditorAtIndex4"
+    },
+    // "alt+5" shows explorer on the side bar
+    {
+        "key": "alt+5",
+        "command": "workbench.view.extensions",
+        "when": "!sideBarVisible || activeViewlet != 'workbench.view.extensions'"
+    },
+    {
+        "key": "alt+5",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "sideBarVisible && activeViewlet == 'workbench.view.extensions'"
+    },
+    {
+        "key": "alt+5",
+        "command": "-workbench.action.openEditorAtIndex5"
+    }
+]
