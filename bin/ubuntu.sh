@@ -29,6 +29,9 @@ function main() {
     install-scripting-runtimes
     install-webapps
 
+    # Set firefox as default browser
+    /usr/bin/xdg-settings set default-web-browser org.mozilla.firefox.desktop
+
     setup-command-line
     setup-gnome-settings
     setup-gnome-terminal-profile
@@ -359,6 +362,15 @@ function setup-gnome-settings() {
     # Reset the layout of the app grid
     /usr/bin/gsettings reset org.gnome.shell app-picker-layout && sleep 1
 
+    # Setup clock
+    /usr/bin/gsettings set org.gnome.desktop.interface clock-format 24h && sleep 1
+    /usr/bin/gsettings set org.gnome.desktop.interface clock-show-date true && sleep 1
+    /usr/bin/gsettings set org.gnome.desktop.interface clock-show-seconds true && sleep 1
+    /usr/bin/gsettings set org.gnome.desktop.interface clock-show-weekday true && sleep 1
+
+    # Do not attach mini windows to their parents
+    /usr/bin/gsettings set org.gnome.mutter attach-modal-dialogs false && sleep 1
+
     # Set dark theme
     /usr/bin/gsettings set org.gnome.desktop.interface color-scheme prefer-dark && sleep 1
     /usr/bin/gsettings set org.gnome.desktop.interface gtk-theme Yaru-blue-dark && sleep 1
@@ -367,10 +379,19 @@ function setup-gnome-settings() {
     # Enable hot corners
     /usr/bin/gsettings set org.gnome.desktop.interface enable-hot-corners true && sleep 1
 
+    # Disable the third mouse button behaving like ctrl+v
+    /usr/bin/gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false && sleep 1
+
     # Configure dock: auto hide, show at bottom, do not fill the screen
     /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false && sleep 1
     /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM && sleep 1
     /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false && sleep 1
+    # Hide not mounted disks (mounted disks will still show up)
+    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true && sleep 1
+    # Show on all screens
+    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock multi-monitor true && sleep 1
+    # Show the apps icons at the beginning of the dock, not at the end
+    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true && sleep 1
 
     # Configure desktop icons
     /usr/bin/gsettings set org.gnome.shell.extensions.ding start-corner top-left && sleep 1
