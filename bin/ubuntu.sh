@@ -197,7 +197,7 @@ function install-orphan-software() {
 }
 
 function install-orphan-deb() {
-    local deb_url deb_sum deb_path package_name package_new_version package_old_version
+    local deb_url deb_sum deb_path tmp package_name package_new_version package_old_version
 
     deb_url="$1"
     readonly deb_url
@@ -208,9 +208,31 @@ function install-orphan-deb() {
     deb_path="$3"
     readonly deb_path
 
-    # Download the deb and check its signature
-    /usr/bin/curl --output "$deb_path" --location "$deb_url"
-    echo "$deb_sum" "$deb_path" | /usr/bin/sha256sum --check
+    # If "$deb_path" already exists, warranty it has a valid signature,
+    # otherwise back it up for future inspection and remove it.
+    if [ -e "$deb_path" ]; then
+        if ! echo "$deb_sum" "$deb_path" | /usr/bin/sha256sum --check; then
+            >&2 echo Suspicious deb "$deb_path", will back it up
+
+            # Convoluted way of moving `"$deb_path"` "into itself" so we can
+            # leverage `mv --backup` for backing it up.
+            # 1. Create a temporary file
+            # 2. Move the temporary file into the file we
+            #    want to backup
+            # 3. Delete the temporary file
+            tmp="$(mktemp)"
+            readonly tmp
+
+            /usr/bin/mv --backup=numbered "$tmp" "$deb_path"
+            /usr/bin/rm "$deb_path"
+        fi
+    fi
+
+    # If the deb didn't already exist with a valid signature, download it.
+    if [ ! -e "$deb_path" ]; then
+        /usr/bin/curl --output "$deb_path" --location "$deb_url"
+        echo "$deb_sum" "$deb_path" | /usr/bin/sha256sum --check
+    fi
 
     package_name="$(/usr/bin/dpkg --field "$deb_path" Package)"
     readonly package_name
