@@ -411,7 +411,7 @@ function setup-gnome-terminal-profile() {
 }
 
 function setup-flatpak-applications() {
-    local flatpaks_with_custom_theme
+    local flatpak_with_custom_theme flatpaks_with_custom_theme
 
     # These applications do not match the theme out of the box and need to be manually forced
     # to the closest onet
