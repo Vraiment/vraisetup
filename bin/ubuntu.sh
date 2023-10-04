@@ -119,14 +119,18 @@ function install-common-software-flatpak() {
 
     software=(
         com.github.PintaProject.Pinta
+        com.github.finefindus.eyedropper
         com.github.tchx84.Flatseal
         io.missioncenter.MissionCenter
         org.gimp.GIMP
         org.gnome.baobab
         org.gnome.Boxes
+        org.gnome.Calculator
+        org.gnome.Calendar
         org.gnome.Characters
         org.gnome.Cheese
         org.gnome.clocks
+        org.gnome.Contacts
         org.gnome.eog
         org.gnome.Evince
         org.gnome.Extensions
@@ -138,6 +142,7 @@ function install-common-software-flatpak() {
         org.gnome.Weather
         org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22 # The default Yaru version installed is 3.22
         org.libreoffice.LibreOffice
+        org.mozilla.Thunderbird
         org.mozilla.firefox
     )
     readonly software
@@ -272,6 +277,7 @@ function remove-unused-software() {
         eog
         # file-roller File Roller is considered part of the Ubuntu Desktop
         gedit
+        gnome-calculator
         gnome-characters
         gnome-logs
     )
