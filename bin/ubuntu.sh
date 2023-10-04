@@ -426,6 +426,9 @@ function setup-gnome-settings() {
     # Configure desktop icons
     /usr/bin/gsettings set org.gnome.shell.extensions.ding start-corner top-left && sleep 1
 
+    # Ensure trackpads use the whole trackpad as trackpad and only two fingers as a secondary click
+    /usr/bin/gsettings set org.gnome.desktop.peripherals.touchpad click-method fingers && sleep 1
+
     # Compose key allows to write tildes and the like
     /usr/bin/gsettings set org.gnome.desktop.input-sources xkb-options "['compose:rctrl']" && sleep 1
 
