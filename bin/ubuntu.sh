@@ -67,6 +67,7 @@ function install-common-software-apt() {
         signal-desktop
         vim
         wl-clipboard # Copy&paste in the terminal
+        xclip # X11 is still the default on certain cases on Ubuntu
     )
     readonly software
 
