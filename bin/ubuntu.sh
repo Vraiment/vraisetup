@@ -19,7 +19,7 @@ function main() {
 
     install-common-software-apt
     install-common-software-snap
-    add-flathub
+    setup-flatpak
     install-common-software-flatpak
     install-orphan-software
 
@@ -255,8 +255,12 @@ function install-orphan-deb() {
     fi
 }
 
-function add-flathub() {
+function setup-flatpak() {
+    # Add FlatHub, which is the central FlatPak repository
     /usr/bin/sudo /usr/bin/flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+    # Add (mexican) spanish as a secondary language (for spellchecking)
+    /usr/bin/sudo /usr/bin/flatpak config --set extra-languages es_MX
 }
 
 function remove-unused-software() {
