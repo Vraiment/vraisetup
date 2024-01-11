@@ -172,15 +172,15 @@ function install-orphan-software() {
         747a0c9c378c87f79346a4405a4120b97d1c249b31311ec71ae919a8e2a006cf \
         "$deb_dir"/discord-"$discord_version".deb
 
-    # Install NAPS2, sha256sum calculated Sept 17th, 2023
+    # Install NAPS2, sha256sum calculated Jan 10th, 2024
     # NAPS2 it's also offered as a Flatpak but given the USB limitations with Flatpak
     # that version is literally useless.
-    naps2_deb=naps2-7.1.0-linux-x64.deb
-    readonly naps2_deb
+    naps2_version=7.2.2
+    readonly naps2_version
     install-orphan-deb \
-        https://github.com/cyanfish/naps2/releases/download/v7.1.0/"$naps2_deb" \
-        642ed69cb8ae7d9d89d03451008a014e9b54f341d4dc781718f5317b60bc08cc \
-        "$deb_dir"/"$naps2_deb"
+        https://github.com/cyanfish/naps2/releases/download/v"$naps2_version"/naps2-"$naps2_version"-linux-x64.deb \
+        48a695c7b93d0534c82d174bd760e1d5c1039f5718729521898d1fd33bcb9c0b \
+        "$deb_dir"/naps2-"$naps2_version"-linux-x64.deb
 
     # Install Simplenote, sha256sum calculated Sept 17th, 2023
     simplenote_deb=Simplenote-linux-2.21.0-amd64.deb
