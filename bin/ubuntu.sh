@@ -165,11 +165,11 @@ function install-orphan-software() {
     /usr/bin/mkdir --parents "$deb_dir"
 
     # Install Discord, sha256sum calculated Jan 10th, 2024
-    discord_version=0.0.40
+    discord_version=0.0.41
     readonly discord_version
     install-orphan-deb \
         https://dl.discordapp.net/apps/linux/"$discord_version"/discord-"$discord_version".deb \
-        747a0c9c378c87f79346a4405a4120b97d1c249b31311ec71ae919a8e2a006cf \
+        eaa58d2ce691a04d077b4698e536982b2864c0da2c3e3141c7097f3f18973d2d \
         "$deb_dir"/discord-"$discord_version".deb
 
     # Install NAPS2, sha256sum calculated Jan 10th, 2024
