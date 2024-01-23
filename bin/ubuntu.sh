@@ -164,7 +164,7 @@ function install-orphan-software() {
 
     /usr/bin/mkdir --parents "$deb_dir"
 
-    # Install Discord, sha256sum calculated Jan 10th, 2024
+    # Install Discord, sha256sum calculated Jan 22th, 2024
     discord_version=0.0.41
     readonly discord_version
     install-orphan-deb \
