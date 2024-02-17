@@ -417,6 +417,9 @@ function setup-gnome-settings() {
     # Disable the third mouse button behaving like ctrl+v
     /usr/bin/gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false && sleep 1
 
+    # Open new instances of the app when clicking the dock
+    /usr/bin/gsettings set org.gnome.shell.app-switcher current-workspace-only false && sleep 1
+
     # Configure dock: auto hide, show at bottom, do not fill the screen
     /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false && sleep 1
     /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM && sleep 1
