@@ -54,7 +54,12 @@ function install-common-software-apt() {
 
     software=(
         1password
+        containerd.io # Required for Docker
         curl
+        docker-buildx-plugin
+        docker-ce
+        docker-ce-cli
+        docker-compose-plugin
         flatpak
         git
         gnome-software
@@ -105,6 +110,14 @@ function configure-extra-apt-repositories() {
     /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
         "$setup_root"/etc/1password/1password-archive-keyring.gpg \
         /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+
+    # Configure Docker, see the README on the docker dir
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/docker/docker.list \
+        /etc/apt/sources.list.d/docker.list
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/docker/docker.asc \
+        /etc/apt/keyrings/docker.asc
 }
 
 function install-common-software-snap() {
