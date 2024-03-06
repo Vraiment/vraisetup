@@ -20,6 +20,7 @@ function validate-files() {
     local files
 
     files=(
+        applications/vscode/install.sh
         bin/ubuntu.sh
         bin/nativefy.sh
         validate.sh
