@@ -170,7 +170,7 @@ function install-common-software-flatpak() {
 # *officially* distributed via `apt`, `flatpak`  or `snap` and need to
 # be downloaded and installed manually.
 function install-orphan-software() {
-    local deb_dir discord_version naps2_deb simplenote_deb steam_deb
+    local deb_dir discord_version simplenote_deb steam_deb
 
     deb_dir="$data_dir"/deb
     readonly deb_dir
