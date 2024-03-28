@@ -21,8 +21,10 @@ function validate-files() {
 
     files=(
         applications/vscode/install.sh
+        bin/install-orphan-deb.sh
         bin/ubuntu.sh
         bin/nativefy.sh
+        test/install-orphan-deb/test-parse-url.sh
         validate.sh
     )
     readonly files
