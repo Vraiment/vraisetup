@@ -16,19 +16,21 @@ function not-a-test() {
     echo 'asdf'
 }
 
+source $HOME/.local/src/vraisetup/test/run-tests.sh
+
 # mapfile -t defined_functions < <(declare -F)
 # defined_functions=($(declare -F | cut --delimiter=' ' --field=3))
-mapfile -t test_functions < <(declare -F  | cut --delimiter=' ' --field=3 | grep '^test-')
-readonly test_functions
+# mapfile -t test_functions < <(declare -F  | cut --delimiter=' ' --field=3 | grep '^test-')
+# readonly test_functions
 
-for test_function in "${test_functions[@]}"; do
-    echo "=>Running $test_function"
-    if "$test_function"; then
-        echo succeeded
-    else
-        echo failed
-    fi
-done
+# for test_function in "${test_functions[@]}"; do
+#     echo "=>Running $test_function"
+#     if "$test_function"; then
+#         echo succeeded
+#     else
+#         echo failed
+#     fi
+# done
 
 # __test_dir=$HOME/.local/src/vraisetup/test/install-orphan-deb
 # readonly __test_dir
