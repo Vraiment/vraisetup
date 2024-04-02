@@ -29,7 +29,7 @@ function validate-files() {
     )
     readonly files
 
-    shellcheck "${files[@]}"
+    shellcheck --external-sources --check-sourced "${files[@]}"
 }
 
 main "$@"
