@@ -20,6 +20,7 @@ function test-url-file-without-version() {
 URL=https://some-url.com/with/$VERSION/$VERSION.deb
 EOF
 
+    trap "rm $config_file" EXIT
     test "$(parse-url)" = https://some-url.com/with/\$VERSION/\$VERSION.deb
 }
 
@@ -34,5 +35,6 @@ URL=https://some-url.com/with/$VERSION/$VERSION.deb
 VERSION=0.0.0
 EOF
 
+    trap "rm $config_file" EXIT
     test "$(parse-url)" = https://some-url.com/with/0.0.0/0.0.0.deb
 }
