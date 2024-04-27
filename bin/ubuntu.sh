@@ -132,6 +132,7 @@ function install-common-software-flatpak() {
     local software
 
     software=(
+        com.discordapp.Discord
         com.github.PintaProject.Pinta
         com.github.finefindus.eyedropper
         com.github.tchx84.Flatseal
@@ -170,20 +171,12 @@ function install-common-software-flatpak() {
 # *officially* distributed via `apt`, `flatpak`  or `snap` and need to
 # be downloaded and installed manually.
 function install-orphan-software() {
-    local deb_dir discord_version simplenote_deb steam_deb
+    local deb_dir simplenote_deb steam_deb
 
     deb_dir="$data_dir"/deb
     readonly deb_dir
 
     /usr/bin/mkdir --parents "$deb_dir"
-
-    # Install Discord, sha256sum calculated Feb 17th, 2024
-    discord_version=0.0.43
-    readonly discord_version
-    install-orphan-deb \
-        https://dl.discordapp.net/apps/linux/"$discord_version"/discord-"$discord_version".deb \
-        3dca17e6dd70e046fd170b0c996fa6a9776278609ab4a6044b1e4e8e853c8029 \
-        "$deb_dir"/discord-"$discord_version".deb
 
     # Install NAPS2, sha256sum calculated Jan 10th, 2024
     # NAPS2 it's also offered as a Flatpak but given the USB limitations with Flatpak
