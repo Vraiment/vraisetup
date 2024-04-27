@@ -115,8 +115,8 @@ function install-common-software-flatpak() {
 
     software=(
         com.discordapp.Discord
-        com.github.PintaProject.Pinta
         com.github.finefindus.eyedropper
+        com.github.PintaProject.Pinta
         com.github.tchx84.Flatseal
         com.onepassword.OnePassword/x86_64/stable # Ensure the stable version gets installed
         io.missioncenter.MissionCenter
@@ -126,22 +126,20 @@ function install-common-software-flatpak() {
         org.gnome.Calculator
         org.gnome.Calendar
         org.gnome.Characters
-        org.gnome.Cheese
         org.gnome.clocks
         org.gnome.Contacts
-        org.gnome.eog
         org.gnome.Evince
         org.gnome.Extensions
-        # org.gnome.FileRoller File Roller is part of the Ubuntu Desktop package
-        org.gnome.gitg
         org.gnome.Logs
+        org.gnome.Loupe
         org.gnome.Maps
+        org.gnome.Snapshot
         org.gnome.TextEditor
         org.gnome.Weather
         org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22 # The default Yaru version installed is 3.22
         org.libreoffice.LibreOffice
-        org.mozilla.Thunderbird
         org.mozilla.firefox
+        org.mozilla.Thunderbird
     )
     readonly software
 
