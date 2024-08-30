@@ -244,6 +244,21 @@ function install-orphan-deb() {
 }
 
 function setup-flatpak() {
+    # Add required AppArmor profile for Flatpaks
+    # ref: https://bugs.launchpad.net/ubuntu/+source/gnome-software/+bug/2061728/comments/5
+    /usr/bin/cat << EOF | /usr/bin/sudo /usr/bin/tee /etc/apparmor.d/bwrap
+abi <abi/4.0>,
+include <tunables/global>
+
+profile bwrap /usr/bin/bwrap flags=(unconfined) {
+  userns,
+
+  # Site-specific additions and overrides. See local/README for details.
+  include if exists <local/bwrap>
+}
+EOF
+    /usr/bin/sudo /usr/bin/systemctl reload apparmor
+
     # Add FlatHub, which is the central FlatPak repository
     /usr/bin/sudo /usr/bin/flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
@@ -275,13 +290,16 @@ function remove-unused-software() {
 
     # For this software the flatpak version is installed instead
     apt_packages=(
-        evince
+        baobab
         eog
-        # file-roller File Roller is considered part of the Ubuntu Desktop
+        evince
         gedit
         gnome-calculator
         gnome-characters
+        gnome-clocks
         gnome-logs
+        gnome-power-manager
+        gnome-text-editor
     )
     readonly apt_packages
 
