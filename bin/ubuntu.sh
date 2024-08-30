@@ -182,10 +182,10 @@ function install-orphan-software() {
     # Valve publishes the deb to the Steam page as `steam_latest.deb`
     # but the repository is browsable and has links to all of the
     # versions
-    steam_deb=steam-launcher_1.0.0.78_all.deb
+    steam_deb=steam-launcher_1.0.0.81_all.deb
     readonly steam_deb
     install-orphan-deb \
-        https://repo.steampowered.com/steam/archive/precise/"$steam_deb" \
+        https://repo.steampowered.com/steam/archive/stable/"$steam_deb" \
         456c200c00f7cae57db06d2067fbdb1fa3727eb6744371827913c4cf82d507a0 \
         "$deb_dir"/"$steam_deb"
 }
