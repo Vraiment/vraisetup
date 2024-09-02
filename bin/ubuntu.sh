@@ -152,7 +152,7 @@ function install-common-software-flatpak() {
 # *officially* distributed via `apt`, `flatpak`  or `snap` and need to
 # be downloaded and installed manually.
 function install-orphan-software() {
-    local deb_dir simplenote_version steam_deb
+    local deb_dir simplenote_version simplenote_deb steam_deb
 
     deb_dir="$data_dir"/deb
     readonly deb_dir
@@ -172,11 +172,12 @@ function install-orphan-software() {
     # Install Simplenote, sha256sum calculated Aug 29th, 2024
     # TODO: This version seems to be broken on Ubuntu 24.04, 2.22.2 will fix it
     simplenote_version=2.22.1
+    simplenote_deb=Simplenote-linux-"$simplenote_version"-amd64.deb
     readonly simplenote_version
     install-orphan-deb \
-        https://github.com/Automattic/simplenote-electron/releases/download/"$simplenote_version"/Simplenote-linux-"$simplenote_version"-amd64.deb \
+        https://github.com/Automattic/simplenote-electron/releases/download/"$simplenote_version"/"$simplenote_deb" \
         2454d2a417d9457a0887f2a222ee893e278730c7379a1d2517cc7c3295b5db84 \
-        "$deb_dir"/"$simplenote_version"
+        "$deb_dir"/"$simplenote_deb"
 
     # Install Steam, sha256sum calculated Sept 17th, 2023
     # Valve publishes the deb to the Steam page as `steam_latest.deb`
