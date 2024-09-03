@@ -300,6 +300,7 @@ function remove-unused-software() {
         gnome-clocks
         gnome-logs
         gnome-power-manager
+        gnome-snapshot
         gnome-text-editor
     )
     readonly apt_packages
