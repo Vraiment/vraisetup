@@ -179,7 +179,7 @@ function install-orphan-software() {
         2454d2a417d9457a0887f2a222ee893e278730c7379a1d2517cc7c3295b5db84 \
         "$deb_dir"/"$simplenote_deb"
 
-    # Install Steam, sha256sum calculated Sept 17th, 2023
+    # Install Steam, sha256sum calculated Sept 2nd, 2024
     # Valve publishes the deb to the Steam page as `steam_latest.deb`
     # but the repository is browsable and has links to all of the
     # versions
@@ -187,7 +187,7 @@ function install-orphan-software() {
     readonly steam_deb
     install-orphan-deb \
         https://repo.steampowered.com/steam/archive/stable/"$steam_deb" \
-        456c200c00f7cae57db06d2067fbdb1fa3727eb6744371827913c4cf82d507a0 \
+        afd2b922f9771a9ca7ee0cb416bdd4fceabf3e75a2c5b65f654a10419762960d \
         "$deb_dir"/"$steam_deb"
 }
 
