@@ -21,6 +21,7 @@ function validate-files() {
 
     files=(
         applications/vscode/install.sh
+        bin/flatpak_system2local.sh
         bin/ubuntu.sh
         validate.sh
     )

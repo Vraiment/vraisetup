@@ -162,7 +162,7 @@ function install-common-software-flatpak() {
 
     # Install system wide with sudo, this is because I don't want to use home
     # directory storage on flatpak applications
-    /usr/bin/sudo /usr/bin/flatpak install --system --assumeyes "${software[@]}"
+    /usr/bin/flatpak install --user --assumeyes "${software[@]}"
 }
 
 # "Orphan" software in this context referts to applications that are not
@@ -278,7 +278,7 @@ EOF
     /usr/bin/sudo /usr/bin/systemctl reload apparmor
 
     # Add FlatHub, which is the central FlatPak repository
-    /usr/bin/sudo /usr/bin/flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    /usr/bin/sudo /usr/bin/flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
     # Add (mexican) spanish as a secondary language (for spellchecking)
     /usr/bin/sudo /usr/bin/flatpak config --set extra-languages es_MX
