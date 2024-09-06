@@ -53,6 +53,7 @@ function install-common-software-apt() {
     configure-extra-apt-repositories
 
     software=(
+        1password
         containerd.io # Required for Docker
         curl
         docker-buildx-plugin
@@ -93,6 +94,23 @@ function configure-extra-apt-repositories() {
         "$setup_root"/etc/signal/signal-xenial.list \
         /etc/apt/sources.list.d/signal-xenial.list
 
+    # Configure 1Password, see the README on the 1Password dir
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/1password/1password-archive-keyring.gpg \
+        /usr/share/keyrings/1password-archive-keyring.gpg
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/1password/1password.list \
+        /etc/apt/sources.list.d/1password.list
+    # Configure debsig-verify policy for 1Password
+    /usr/bin/sudo /usr/bin/mkdir --parents /etc/debsig/policies/AC2D62742012EA22
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/1password/1password.pol \
+        /etc/debsig/policies/AC2D62742012EA22/1password.pol
+    /usr/bin/sudo /usr/bin/mkdir --parents /usr/share/debsig/keyrings/AC2D62742012EA22
+    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
+        "$setup_root"/etc/1password/1password-archive-keyring.gpg \
+        /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+
     # Configure Docker, see the README on the docker dir
     /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
         "$setup_root"/etc/docker/docker.list \
@@ -118,7 +136,6 @@ function install-common-software-flatpak() {
         com.github.finefindus.eyedropper
         com.github.PintaProject.Pinta
         com.github.tchx84.Flatseal
-        com.onepassword.OnePassword/x86_64/stable # Ensure the stable version gets installed
         io.missioncenter.MissionCenter
         org.gimp.GIMP
         org.gnome.baobab
@@ -262,15 +279,6 @@ EOF
 
     # Add FlatHub, which is the central FlatPak repository
     /usr/bin/sudo /usr/bin/flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-    # 1Password repository
-    /usr/bin/sudo /usr/bin/flatpak remote-add \
-        --system \
-        --if-not-exists \
-        --from \
-        onepassword-origin "$setup_root"/etc/1password/1password.flatpakrepo
-    # Ensure you can install from 1Password remote
-    /usr/bin/sudo /usr/bin/flatpak remote-modify --enumerate onepassword-origin
 
     # Add (mexican) spanish as a secondary language (for spellchecking)
     /usr/bin/sudo /usr/bin/flatpak config --set extra-languages es_MX
