@@ -72,7 +72,6 @@ function install-common-software-apt() {
         signal-desktop
         vim
         wl-clipboard # Copy&paste in the terminal
-        xclip # X11 is still the default on certain cases on Ubuntu
     )
     readonly software
 
@@ -326,7 +325,6 @@ function install-gnome-extensions() {
     # the values
     extensions=(
         gsconnectandyholmes.github.io.v50.shell-extension.zip
-        bluetooth-quick-connectbjarosze.gmail.com.v34.shell-extension.zip
         weeks-start-on-mondayextensions.gnome-shell.fifi.org.v13.shell-extension.zip
     )
     readonly extensions
@@ -345,7 +343,7 @@ function install-gnome-extensions() {
     # Enable the extensions by setting the values on gsettings directly rather than via `gnome-extensions`
     # as the later requires a session reboot for it to work
     /usr/bin/gsettings set org.gnome.shell enabled-extensions \
-        "['bluetooth-quick-connect@bjarosze.gmail.com', 'gsconnect@andyholmes.github.io', 'weeks-start-on-monday@extensions.gnome-shell.fifi.org']" && sleep 1
+        "['gsconnect@andyholmes.github.io', 'weeks-start-on-monday@extensions.gnome-shell.fifi.org']" && sleep 1
 }
 
 function install-scripting-runtimes() {
