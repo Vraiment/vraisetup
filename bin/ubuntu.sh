@@ -146,6 +146,7 @@ function install-common-software-flatpak() {
         org.gnome.Contacts
         org.gnome.Evince
         org.gnome.Extensions
+        org.gnome.font-viewer
         org.gnome.Logs
         org.gnome.Loupe
         org.gnome.Maps
@@ -305,6 +306,7 @@ function remove-unused-software() {
         gnome-calculator
         gnome-characters
         gnome-clocks
+        gnome-font-viewer
         gnome-logs
         gnome-power-manager
         gnome-snapshot
