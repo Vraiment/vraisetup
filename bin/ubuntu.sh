@@ -352,10 +352,6 @@ function install-scripting-runtimes() {
         e5fe1edc05d827bc87f7ea9724b19632cc68bff10a04912bfd1017385f22f2fb
 }
 
-function install-webapps() {
-    "$setup_root"/bin/nativefy.sh WhatsApp https://web.whatsapp.com
-}
-
 function install-from-github() {
     local url sha256sum install_script
 

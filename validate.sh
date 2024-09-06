@@ -22,7 +22,6 @@ function validate-files() {
     files=(
         applications/vscode/install.sh
         bin/ubuntu.sh
-        bin/nativefy.sh
         validate.sh
     )
     readonly files
