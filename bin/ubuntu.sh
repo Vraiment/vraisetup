@@ -27,7 +27,6 @@ function main() {
 
     install-gnome-extensions
     install-scripting-runtimes
-    install-webapps
 
     # Set firefox as default browser
     /usr/bin/xdg-settings set default-web-browser org.mozilla.firefox.desktop
