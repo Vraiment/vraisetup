@@ -28,6 +28,10 @@ function main() {
     install-gnome-extensions
     install-scripting-runtimes
 
+    # Enable "sudoless" `docker`
+    /usr/bin/sudo /usr/sbin/groupadd --force docker
+    /usr/bin/sudo /usr/sbin/usermod --append --groups docker "$USER"
+
     # Set firefox as default browser
     /usr/bin/xdg-settings set default-web-browser org.mozilla.firefox.desktop
 
