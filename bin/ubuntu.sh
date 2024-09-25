@@ -189,14 +189,13 @@ function install-orphan-software() {
         8e7b4c4a145aec721cb5da6b95afb2487a7358b1265e90250e5c7af6ce9f2dcb \
         "$deb_dir"/naps2-"$naps2_version"-linux-x64.deb
 
-    # Install Simplenote, sha256sum calculated Aug 29th, 2024
-    # TODO: This version seems to be broken on Ubuntu 24.04, 2.22.2 will fix it
-    simplenote_version=2.22.1
+    # Install Simplenote, sha256sum calculated Sep 24th, 2024
+    simplenote_version=2.22.2
     simplenote_deb=Simplenote-linux-"$simplenote_version"-amd64.deb
     readonly simplenote_version
     install-orphan-deb \
         https://github.com/Automattic/simplenote-electron/releases/download/"$simplenote_version"/"$simplenote_deb" \
-        2454d2a417d9457a0887f2a222ee893e278730c7379a1d2517cc7c3295b5db84 \
+        6a9f536ed7bb67f70abd70f124990547ff76582cdc1d7026d2e8c878f7df3739 \
         "$deb_dir"/"$simplenote_deb"
 
     # Install Steam, sha256sum calculated Sept 2nd, 2024
