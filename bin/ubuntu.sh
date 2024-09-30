@@ -194,7 +194,7 @@ function install-orphan-software() {
     simplenote_deb=Simplenote-linux-"$simplenote_version"-amd64.deb
     readonly simplenote_version
     install-orphan-deb \
-        https://github.com/Automattic/simplenote-electron/releases/download/"$simplenote_version"/"$simplenote_deb" \
+        https://github.com/Automattic/simplenote-electron/releases/download/v"$simplenote_version"/"$simplenote_deb" \
         6a9f536ed7bb67f70abd70f124990547ff76582cdc1d7026d2e8c878f7df3739 \
         "$deb_dir"/"$simplenote_deb"
 
