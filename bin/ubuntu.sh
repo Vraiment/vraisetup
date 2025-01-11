@@ -127,6 +127,7 @@ function install-common-software-snap() {
     # otherwise reruning the command will fail
     /usr/bin/sudo /usr/bin/snap install code --classic
     /usr/bin/sudo /usr/bin/snap install spotify
+    /usr/bin/sudo /usr/bin/snap install todoist
     /usr/bin/sudo /usr/bin/snap install vlc
 }
 
