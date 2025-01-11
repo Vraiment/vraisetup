@@ -281,7 +281,7 @@ EOF
     /usr/bin/sudo /usr/bin/systemctl reload apparmor
 
     # Add FlatHub, which is the central FlatPak repository
-    /usr/bin/sudo /usr/bin/flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    /usr/bin/flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
     # Add (mexican) spanish as a secondary language (for spellchecking)
     /usr/bin/sudo /usr/bin/flatpak config --set extra-languages es_MX
