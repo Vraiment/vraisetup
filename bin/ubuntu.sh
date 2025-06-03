@@ -190,13 +190,13 @@ function install-orphan-software() {
         5f3cd28e1a65e0f9d4a0f6533aaba1a14669961767082c7a94b682137c55093d \
         "$deb_dir"/naps2-"$naps2_version"-linux-x64.deb
 
-    # Install Simplenote, sha256sum calculated Sep 24th, 2024
-    simplenote_version=2.22.2
+    # Install Simplenote, sha256sum calculated Jun 02nd, 2025
+    simplenote_version=2.23.2
     simplenote_deb=Simplenote-linux-"$simplenote_version"-amd64.deb
     readonly simplenote_version
     install-orphan-deb \
         https://github.com/Automattic/simplenote-electron/releases/download/v"$simplenote_version"/"$simplenote_deb" \
-        6a9f536ed7bb67f70abd70f124990547ff76582cdc1d7026d2e8c878f7df3739 \
+        ae5c5a46347d68031324633c27f33afdeabfc6ffca5f58dd638002e6db99f22b \
         "$deb_dir"/"$simplenote_deb"
 
     # Install Steam, sha256sum calculated Sept 2nd, 2024
