@@ -489,6 +489,10 @@ function setup-flatpak-applications() {
     for flatpak_with_custom_theme in "${flatpaks_with_custom_theme[@]}"; do
         /usr/bin/flatpak override --user --env=GTK_THEME=Yaru-Blue-dark "$flatpak_with_custom_theme"
     done
+
+    # Ensure weeks start on MOnday for Gnome calendar, en_DK should be identical
+    # with the exception of the start of the week
+    /usr/bin/flatpak override --user --env=LC_TIME=en_DK.UTF-8 org.gnome.Calendar
 }
 
 main "$@"
