@@ -40,6 +40,8 @@ function main() {
     setup-gnome-terminal-profile
     setup-flatpak-applications
 
+    setup-appimages
+
     "$setup_root"/applications/vscode/install.sh
 }
 
@@ -71,6 +73,7 @@ function install-common-software-apt() {
         gnome-sushi # Preview files from Nautilus
         gnome-tweaks
         hunspell-es # Spanish dictionary
+        libfuse2 # Required for AppImages
         shellcheck
         signal-desktop
         vim
@@ -493,6 +496,24 @@ function setup-flatpak-applications() {
     # Ensure weeks start on MOnday for Gnome calendar, en_DK should be identical
     # with the exception of the start of the week
     /usr/bin/flatpak override --user --env=LC_TIME=en_DK.UTF-8 org.gnome.Calendar
+}
+
+function setup-appimages() {
+    # Allows AppImages to be placed under `$HOME/Applications/*.AppImage`
+    /usr/bin/cat << EOF | /usr/bin/sudo /usr/bin/tee /etc/apparmor.d/userappimages
+abi <abi/4.0>,
+include <tunables/global>
+
+profile userappimages @{HOME}/Applications/*.AppImage flags=(default_allow) {
+  userns,
+
+  # Site-specific additions and overrides. See local/README for details.
+  include if exists <local/userappimages>
+}
+EOF
+    /usr/bin/sudo /usr/bin/systemctl reload apparmor
+
+    # TODO: Add `appimaged`
 }
 
 main "$@"
