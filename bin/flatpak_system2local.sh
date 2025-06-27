@@ -20,14 +20,14 @@ function main() {
 
     for app in $allApps; do
         "$FLATPAK" install --or-update --user --assumeyes "$app"
-        "$FLATPAK" uninstall --system --assumeyes "$app"
+        "$SUDO" "$FLATPAK" uninstall --system --assumeyes "$app"
     done
 
     allRuntimes=$("$FLATPAK" list --system --runtime --columns=origin,application,branch | ("$GREP" '^flathub' || true) | "$CUT" --fields=2,3 | "$SED" "s|\t|/x86_64/|g")
     readonly allRuntimes
 
     for runtime in $allRuntimes; do
-        "$FLATPAK" uninstall --system --assumeyes "$runtime" || true
+        "$SUDO" "$FLATPAK" uninstall --system --assumeyes "$runtime" || true
     done
 
     "$SUDO" "$FLATPAK" remote-delete --system flathub
