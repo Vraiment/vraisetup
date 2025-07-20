@@ -430,6 +430,9 @@ function setup-gnome-settings() {
     /usr/bin/gsettings set org.gnome.desktop.interface clock-show-seconds true && sleep 1
     /usr/bin/gsettings set org.gnome.desktop.interface clock-show-weekday true && sleep 1
 
+    # Set weather units
+    /usr/bin/gsettings set org.gnome.GWeather4 temperature-unit centigrade && sleep 1
+
     # Do not attach mini windows to their parents
     /usr/bin/gsettings set org.gnome.mutter attach-modal-dialogs false && sleep 1
 
