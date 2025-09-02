@@ -183,14 +183,14 @@ function install-orphan-software() {
 
     /usr/bin/mkdir --parents "$deb_dir"
 
-    # Install NAPS2, sha256sum calculated Jul 10th, 2025
+    # Install NAPS2, sha256sum calculated Sep 01st, 2025
     # NAPS2 it's also offered as a Flatpak but given the USB limitations with Flatpak
     # that version is literally useless.
-    naps2_version=8.2.0
+    naps2_version=8.2.1
     readonly naps2_version
     install-orphan-deb \
         https://github.com/cyanfish/naps2/releases/download/v"$naps2_version"/naps2-"$naps2_version"-linux-x64.deb \
-        56e12ef301f870e79cf798b63e6dda9ac58d97b0b465cf420f891b36d481db54 \
+        8e23c4a6d7f0b75512459cc29a639ec395355f222375291ed674525c7c9cd4b7 \
         "$deb_dir"/naps2-"$naps2_version"-linux-x64.deb
 
     # Install Simplenote, sha256sum calculated Jun 02nd, 2025
