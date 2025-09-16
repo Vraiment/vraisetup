@@ -20,6 +20,7 @@ function validate-files() {
     local files
 
     files=(
+        applications/ptyxis/install.sh
         applications/vscode/install.sh
         bin/flatpak_system2local.sh
         bin/ubuntu.sh

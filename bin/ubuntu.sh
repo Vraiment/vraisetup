@@ -37,7 +37,6 @@ function main() {
 
     setup-command-line
     setup-gnome-settings
-    setup-gnome-terminal-profile
     setup-flatpak-applications
 
     setup-appimages
@@ -138,6 +137,7 @@ function install-common-software-flatpak() {
     local software
 
     software=(
+        app.devsuite.Ptyxis
         com.discordapp.Discord
         com.github.finefindus.eyedropper
         com.github.PintaProject.Pinta
@@ -473,10 +473,6 @@ function setup-gnome-settings() {
     # Keyboard shortcuts
     /usr/bin/gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']" && sleep 1
     /usr/bin/gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']" && sleep 1
-}
-
-function setup-gnome-terminal-profile() {
-    /usr/bin/dconf load /org/gnome/terminal/legacy/profiles:/ < "$setup_root"/etc/VraiTerminal.dconf
 }
 
 function setup-flatpak-applications() {
