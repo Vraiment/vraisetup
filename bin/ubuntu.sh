@@ -68,7 +68,6 @@ function install-common-software-apt() {
         git
         gnome-software
         gnome-software-plugin-flatpak
-        gnome-software-plugin-snap
         gnome-sushi # Preview files from Nautilus
         gnome-tweaks
         hunspell-es # Spanish dictionary
@@ -128,6 +127,7 @@ function install-common-software-snap() {
     # Each snap must be installed separately
     # otherwise reruning the command will fail
     /usr/bin/sudo /usr/bin/snap install code --classic
+    /usr/bin/sudo /usr/bin/snap install snap-store
     /usr/bin/sudo /usr/bin/snap install spotify
     /usr/bin/sudo /usr/bin/snap install todoist
     /usr/bin/sudo /usr/bin/snap install vlc
@@ -292,11 +292,6 @@ EOF
 
 function remove-unused-software() {
     local apt_packages
-
-    # The Snap store is not great, and the Gnome Software application
-    # supports deb, snap and flatpak. So instead that gets installed
-    # and this one removed
-    /usr/bin/sudo /usr/bin/snap remove --purge snap-store
 
     # At this point I think using Firefox from Flatpak (previously
     # installed) will be better from Snap as the settings are more
