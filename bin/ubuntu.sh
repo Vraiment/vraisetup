@@ -33,7 +33,7 @@ function main() {
     /usr/bin/sudo /usr/sbin/usermod --append --groups docker "$USER"
 
     # Set firefox as default browser
-    /usr/bin/xdg-settings set default-web-browser org.mozilla.firefox.desktop
+    /usr/bin/xdg-settings set default-web-browser com.brave.Browser.desktop
 
     setup-command-line
     setup-gnome-settings
@@ -139,6 +139,7 @@ function install-common-software-flatpak() {
     software=(
         app.devsuite.Ptyxis
         com.discordapp.Discord
+        com.brave.Browser
         com.github.finefindus.eyedropper
         com.github.PintaProject.Pinta
         com.github.tchx84.Flatseal
@@ -293,9 +294,7 @@ EOF
 function remove-unused-software() {
     local apt_packages
 
-    # At this point I think using Firefox from Flatpak (previously
-    # installed) will be better from Snap as the settings are more
-    # accessible from Flatseal
+    # I no longer use Firefox, and even if I used it I'd pick the Flatpak version
     /usr/bin/sudo /usr/bin/snap remove --purge firefox
 
     # For this software the flatpak version is installed instead
