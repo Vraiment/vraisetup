@@ -475,10 +475,7 @@ function setup-flatpak-applications() {
     # These applications do not match the theme out of the box and need to be manually forced
     # to the closest onet
     flatpaks_with_custom_theme=(
-        com.github.PintaProject.Pinta
-        org.gnome.Cheese
         org.libreoffice.LibreOffice
-        org.mozilla.firefox
     )
     readonly flatpaks_with_custom_theme
 
