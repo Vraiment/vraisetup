@@ -1,0 +1,40 @@
+- name: Flatpak setup
+  hosts: localhost
+  tasks:
+    - name: Install Flatpak from repositories
+      become: true
+      apt:
+        name:
+          - flatpak
+          - gnome-software
+          - gnome-software-plugin-flatpak
+        update_cache: yes
+        state: present
+    # Add required AppArmor profile for Flatpaks
+    # ref: https://bugs.launchpad.net/ubuntu/+source/gnome-software/+bug/2061728/comments/5
+    - name: Setup AppArmor for Flatpak
+      become: true
+      copy:
+        dest: /etc/apparmor.d/bwrap
+        content: |
+          abi <abi/4.0>,
+          include <tunables/global>
+
+          profile bwrap /usr/bin/bwrap flags=(unconfined) {
+            userns,
+
+            # Site-specific additions and overrides. See local/README for details.
+            include if exists <local/bwrap>
+          }
+        mode: "0644"
+    - name: Reload AppArmor
+      become: true
+      command: /usr/bin/systemctl reload apparmor
+    - name: Setup Flathub
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+        method: user
+    - name: Add mexican spanish
+      command: /usr/bin/flatpak config --user --set extra-languages es_MX
