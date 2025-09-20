@@ -19,7 +19,6 @@ function main() {
 
     install-common-software-apt
     install-common-software-snap
-    setup-flatpak
     install-common-software-flatpak
     install-orphan-software
 
@@ -64,10 +63,7 @@ function install-common-software-apt() {
         docker-ce
         docker-ce-cli
         docker-compose-plugin
-        flatpak
         git
-        gnome-software
-        gnome-software-plugin-flatpak
         gnome-sushi # Preview files from Nautilus
         gnome-tweaks
         hunspell-es # Spanish dictionary
@@ -266,29 +262,6 @@ function install-orphan-deb() {
     if [[ -z "$package_old_version" ]] || /usr/bin/dpkg --compare-versions "$package_new_version" gt "$package_old_version"; then
         /usr/bin/sudo /usr/bin/apt install --assume-yes "$deb_path"
     fi
-}
-
-function setup-flatpak() {
-    # Add required AppArmor profile for Flatpaks
-    # ref: https://bugs.launchpad.net/ubuntu/+source/gnome-software/+bug/2061728/comments/5
-    /usr/bin/cat << EOF | /usr/bin/sudo /usr/bin/tee /etc/apparmor.d/bwrap
-abi <abi/4.0>,
-include <tunables/global>
-
-profile bwrap /usr/bin/bwrap flags=(unconfined) {
-  userns,
-
-  # Site-specific additions and overrides. See local/README for details.
-  include if exists <local/bwrap>
-}
-EOF
-    /usr/bin/sudo /usr/bin/systemctl reload apparmor
-
-    # Add FlatHub, which is the central FlatPak repository
-    /usr/bin/flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-    # Add (mexican) spanish as a secondary language (for spellchecking)
-    /usr/bin/sudo /usr/bin/flatpak config --set extra-languages es_MX
 }
 
 function remove-unused-software() {
