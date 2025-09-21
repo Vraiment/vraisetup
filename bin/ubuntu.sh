@@ -141,22 +141,7 @@ function install-common-software-flatpak() {
         com.github.tchx84.Flatseal
         io.missioncenter.MissionCenter
         org.gimp.GIMP
-        org.gnome.baobab
         org.gnome.Boxes
-        org.gnome.Calculator
-        org.gnome.Calendar
-        org.gnome.Characters
-        org.gnome.clocks
-        org.gnome.Contacts
-        org.gnome.Evince
-        org.gnome.Extensions
-        org.gnome.font-viewer
-        org.gnome.Logs
-        org.gnome.Loupe
-        org.gnome.Maps
-        org.gnome.Snapshot
-        org.gnome.TextEditor
-        org.gnome.Weather
         org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22 # The default Yaru version installed is 3.22
         org.libreoffice.LibreOffice
         org.mozilla.firefox
@@ -265,29 +250,8 @@ function install-orphan-deb() {
 }
 
 function remove-unused-software() {
-    local apt_packages
-
     # I no longer use Firefox, and even if I used it I'd pick the Flatpak version
     /usr/bin/sudo /usr/bin/snap remove --purge firefox
-
-    # For this software the flatpak version is installed instead
-    apt_packages=(
-        baobab
-        eog
-        evince
-        gedit
-        gnome-calculator
-        gnome-characters
-        gnome-clocks
-        gnome-font-viewer
-        gnome-logs
-        gnome-power-manager
-        gnome-snapshot
-        gnome-text-editor
-    )
-    readonly apt_packages
-
-    /usr/bin/sudo /usr/bin/apt autoremove --purge --assume-yes "${apt_packages[@]}"
 }
 
 function install-gnome-extensions() {
