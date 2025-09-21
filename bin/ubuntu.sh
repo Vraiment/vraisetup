@@ -62,8 +62,6 @@ function install-common-software-apt() {
         docker-ce-cli
         docker-compose-plugin
         git
-        gnome-sushi # Preview files from Nautilus
-        gnome-tweaks
         hunspell-es # Spanish dictionary
         libfuse2 # Required for AppImages
         shellcheck
