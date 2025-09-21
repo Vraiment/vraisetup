@@ -22,8 +22,6 @@ function main() {
     install-common-software-flatpak
     install-orphan-software
 
-    remove-unused-software
-
     install-gnome-extensions
     install-scripting-runtimes
 
@@ -144,7 +142,6 @@ function install-common-software-flatpak() {
         org.gnome.Boxes
         org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22 # The default Yaru version installed is 3.22
         org.libreoffice.LibreOffice
-        org.mozilla.firefox
         org.mozilla.Thunderbird
     )
     readonly software
@@ -247,11 +244,6 @@ function install-orphan-deb() {
     if [[ -z "$package_old_version" ]] || /usr/bin/dpkg --compare-versions "$package_new_version" gt "$package_old_version"; then
         /usr/bin/sudo /usr/bin/apt install --assume-yes "$deb_path"
     fi
-}
-
-function remove-unused-software() {
-    # I no longer use Firefox, and even if I used it I'd pick the Flatpak version
-    /usr/bin/sudo /usr/bin/snap remove --purge firefox
 }
 
 function install-gnome-extensions() {
