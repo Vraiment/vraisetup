@@ -1,0 +1,52 @@
+- name: Gnome desktop
+  hosts: localhost
+  tasks:
+    - name: Remove apt based applications
+      become: true
+      apt:
+        name:
+          - baobab
+          - cheese
+          - eog
+          - epiphany-browser
+          - evince
+          - gedit
+          - gnome-calculator
+          - gnome-characters
+          - gnome-clocks
+          - gnome-contacts
+          - gnome-font-viewer
+          - gnome-logs
+          - gnome-maps
+          - gnome-power-manager
+          - gnome-snapshot
+          - gnome-text-editor
+          - gnome-weather
+          - loupe
+          - papers
+          - showtime
+        state: absent
+        purge: true
+        autoremove: true
+    - name: Install flatpak applications
+      community.general.flatpak:
+        state: present
+        method: user
+        name:
+          - org.gnome.baobab
+          - org.gnome.Calculator
+          - org.gnome.Calendar
+          - org.gnome.Characters
+          - org.gnome.clocks
+          - org.gnome.Contacts
+          - org.gnome.Decibels
+          - org.gnome.Epiphany
+          - org.gnome.font-viewer
+          - org.gnome.Logs
+          - org.gnome.Loupe
+          - org.gnome.Maps
+          - org.gnome.Papers
+          - org.gnome.Showtime
+          - org.gnome.Snapshot
+          - org.gnome.TextEditor
+          - org.gnome.Weather
