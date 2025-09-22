@@ -54,7 +54,6 @@ function install-common-software-apt() {
     configure-extra-apt-repositories
 
     software=(
-        1password
         containerd.io # Required for Docker
         curl
         docker-buildx-plugin
@@ -88,23 +87,6 @@ function configure-extra-apt-repositories() {
     /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
         "$setup_root"/etc/signal/signal-xenial.list \
         /etc/apt/sources.list.d/signal-xenial.list
-
-    # Configure 1Password, see the README on the 1Password dir
-    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
-        "$setup_root"/etc/1password/1password-archive-keyring.gpg \
-        /usr/share/keyrings/1password-archive-keyring.gpg
-    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
-        "$setup_root"/etc/1password/1password.list \
-        /etc/apt/sources.list.d/1password.list
-    # Configure debsig-verify policy for 1Password
-    /usr/bin/sudo /usr/bin/mkdir --parents /etc/debsig/policies/AC2D62742012EA22
-    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
-        "$setup_root"/etc/1password/1password.pol \
-        /etc/debsig/policies/AC2D62742012EA22/1password.pol
-    /usr/bin/sudo /usr/bin/mkdir --parents /usr/share/debsig/keyrings/AC2D62742012EA22
-    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
-        "$setup_root"/etc/1password/1password-archive-keyring.gpg \
-        /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
 
     # Configure Docker, see the README on the docker dir
     /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
