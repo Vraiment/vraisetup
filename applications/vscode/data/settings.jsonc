@@ -60,5 +60,11 @@
     // Controls which editor is shown at startup, if none are restored from the
     // previous session.
     // Set to `none` because I want to decide what to open.
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    // Controls whether show a "sticky" section at the top even after scrolling
+    // Set to `false` because is extremely annoying, it rarely has helped me.
+    "editor.stickyScroll.enabled": false,
+    // Controls whether show a "sticky" section at the top even after scrolling
+    // Set to `false` because is extremely annoying, it rarely has helped me.
+    "terminal.integrated.stickyScroll.enabled": false
 }
