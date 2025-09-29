@@ -64,7 +64,6 @@ function install-common-software-apt() {
         hunspell-es # Spanish dictionary
         libfuse2 # Required for AppImages
         shellcheck
-        signal-desktop
         vim
         wl-clipboard # Copy&paste in the terminal
     )
@@ -79,14 +78,6 @@ function install-common-software-apt() {
 function configure-extra-apt-repositories() {
     # Use --no-preserve=mode,ownership,timestmap to ensure the
     # permissions of the files are root's and not the current user
-
-    # First configure Signal, see the README on the Signal dir
-    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
-        "$setup_root"/etc/signal/signal-desktop-keyring.gpg \
-        /usr/share/keyrings/signal-desktop-keyring.gpg
-    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
-        "$setup_root"/etc/signal/signal-xenial.list \
-        /etc/apt/sources.list.d/signal-xenial.list
 
     # Configure Docker, see the README on the docker dir
     /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
