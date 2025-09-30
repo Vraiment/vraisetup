@@ -1,0 +1,145 @@
+- name: Setup Gnome Desktop
+  hosts: localhost
+  tasks:
+    - name: Reset app picker
+      command: /usr/bin/dconf reset /org/gnome/shell/app-picker-layout
+    - name: Interface setup
+      block:
+        - name: Reset interface settings
+          command: /usr/bin/dconf reset -f /org/gnome/desktop/interface/
+        - name: Setup clock
+          block:
+          - name: 24 hour clock
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/clock-format
+              value: 24
+          - name: Show date
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/clock-show-date
+              value: true
+          - name: Show seconds
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/clock-show-seconds
+              value: true
+          - name: Show weekday
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/clock-show-weekday
+              value: true
+        - name: Set theme
+          block:
+          - name: Enable dark mode
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/color-scheme
+              value: "'prefer-dark'"
+          - name: Set dark blue theme
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/gtk-theme
+              value: "'Yaru-blue-dark'"
+          - name: Set blue icons
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/icon-theme
+              value: "'Yaru-blue'"
+        - name: Misc behavior
+          block:
+          - name: Enable hot corners
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/enable-hot-corners
+              value: true
+          - name: Disable paste with ctrl+v
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/gtk-enable-primary-paste
+              value: false
+    - name: Dock setup
+      block:
+        - name: Reset Dock settings
+          command: /usr/bin/dconf reset -f /org/gnome/shell/extensions/dash-to-dock/
+        - name: Enable auto hide
+          community.general.dconf:
+            key: /org/gnome/shell/extensions/dash-to-dock/dock-fixed
+            value: false
+        - name: Set to the bottom
+          community.general.dconf:
+            key: /org/gnome/shell/extensions/dash-to-dock/dock-position
+            value: "'BOTTOM'"
+        - name: Do not fill the screen
+          community.general.dconf:
+            key: /org/gnome/shell/extensions/dash-to-dock/extend-height
+            value: false
+        - name: Hide not mounted disks (mounted disks will still show up)
+          community.general.dconf:
+            key: /org/gnome/shell/extensions/dash-to-dock/show-mounts-only-mounted
+            value: true
+        - name: Show on all screens
+          community.general.dconf:
+            key: /org/gnome/shell/extensions/dash-to-dock/multi-monitor
+            value: true
+        - name: Show Apps icon at the start of the dock
+          community.general.dconf:
+            key: /org/gnome/shell/extensions/dash-to-dock/show-apps-at-top
+            value: true
+        - name: Show trash icon
+          community.general.dconf:
+            key: /org/gnome/shell/extensions/dash-to-dock/show-trash
+            value: true
+    - name: Input setup
+      block:
+        - name: Reset keyboard settings
+          command: /usr/bin/dconf reset -f /org/gnome/desktop/input-sources/
+        - name: Set keyboard layout (macOS style, modifier key + n or vowel adds Spanish character)
+          community.general.dconf:
+            key: /org/gnome/desktop/input-sources/sources
+            value: "[('xkb', 'us+intl')]"
+        - name: Reset touchpad settings
+          command: /usr/bin/dconf reset -f /org/gnome/desktop/peripherals/
+        - name: Disable mouse acceleration
+          community.general.dconf:
+            key: /org/gnome/desktop/peripherals/mouse/accel-profile
+            value: "'flat'"
+        - name: Use whole trackpad as trackpad and only two fingers as secondary click
+          community.general.dconf:
+            key: /org/gnome/desktop/peripherals/touchpad/click-method
+            value: "'fingers'"
+        - name: Reset media keys shortcuts
+          command: /usr/bin/dconf reset -f /org/gnome/settings-daemon/plugins/media-keys/
+        - name: Open home folder with Super+f
+          community.general.dconf:
+            key: /org/gnome/settings-daemon/plugins/media-keys/home
+            value: "['<Super>f']"
+        - name: Open terminal with Super+t
+          community.general.dconf:
+            key: /org/gnome/settings-daemon/plugins/media-keys/terminal
+            value: "['<Super>t']"
+    - name: Desktop setup
+      block:
+        - name: Reset desktop settings
+          command: /usr/bin/dconf reset -f /org/gnome/shell/extensions/ding/
+        - name: Set the icons to start from the top left corner
+          community.general.dconf:
+            key: /org/gnome/shell/extensions/ding/start-corner
+            value: "'top-left'"
+    - name: Window manager
+      block:
+        - name: Reset window manager (mutter) settings
+          command: /usr/bin/dconf reset -f /org/gnome/mutter/
+        - name: Do not attach "mini windows" to their parents
+          community.general.dconf:
+            key: /org/gnome/mutter/attach-modal-dialogs
+            value: false
+    - name: Set temperature unit to celsius
+      community.general.dconf:
+        key: /org/gnome/GWeather/temperature-unit
+        value: "'centigrade'"
+    - name: GSConnect extension
+      block:
+        - import_tasks: lib/gnome-extension.yaml
+          vars:
+                extension_id: gsconnect@andyholmes.github.io
+                extension_version: 67
+                extension_hash: sha256:430acd022af115d3678a5540d1fa78dc5148cf0822a2a9d80cb9bcc1b19d916d
+    - name: Weeks Start On Monday extension
+      block:
+        - import_tasks: lib/gnome-extension.yaml
+          vars:
+                extension_id: weeks-start-on-monday@extensions.gnome-shell.fifi.org
+                extension_version: 22
+                extension_hash: sha256:2e2a57c953ef9ebdf708f04f86a5e301c373fee4b62e40135a913a5e84b366f5

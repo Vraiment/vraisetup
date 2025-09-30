@@ -22,7 +22,6 @@ function main() {
     install-common-software-flatpak
     install-orphan-software
 
-    install-gnome-extensions
     install-scripting-runtimes
 
     # Enable "sudoless" `docker`
@@ -33,7 +32,6 @@ function main() {
     /usr/bin/xdg-settings set default-web-browser com.brave.Browser.desktop
 
     setup-command-line
-    setup-gnome-settings
     setup-flatpak-applications
 
     setup-appimages
@@ -217,37 +215,6 @@ function install-orphan-deb() {
     fi
 }
 
-function install-gnome-extensions() {
-    # All this installation omits the `gnome-extensions` command as it requires
-    # the gnome session running restarted to work
-    local extensions extension extension_dir
-
-    # These versions were manually selected from the UI to match the Gnome version in Ubuntu 22.04
-    # hence they are hardcoded, they can be updated from the UI or via this script by changing 
-    # the values
-    extensions=(
-        gsconnectandyholmes.github.io.v50.shell-extension.zip
-        weeks-start-on-mondayextensions.gnome-shell.fifi.org.v13.shell-extension.zip
-    )
-    readonly extensions
-
-    extension_dir="$HOME"/.local/share/gnome-shell/extensions
-    readonly extension_dir
-
-    # Downloaded extensions get stored in the setup data dir
-    /usr/bin/mkdir --parents "$data_dir"/extensions "$extension_dir"
-
-    for extension in "${extensions[@]}"; do
-        /usr/bin/curl --output-dir "$data_dir"/extensions --remote-name https://extensions.gnome.org/extension-data/"$extension"
-        /usr/bin/gnome-extensions install --force "$data_dir"/extensions/"$extension"
-    done
-
-    # Enable the extensions by setting the values on gsettings directly rather than via `gnome-extensions`
-    # as the later requires a session reboot for it to work
-    /usr/bin/gsettings set org.gnome.shell enabled-extensions \
-        "['gsconnect@andyholmes.github.io', 'weeks-start-on-monday@extensions.gnome-shell.fifi.org']" && sleep 1
-}
-
 function install-scripting-runtimes() {
     # sha256sum calculated Sept 23th, 2023
     install-from-github \
@@ -308,65 +275,6 @@ function install-vraishell() {
     fi
 
     "$vraishell_dir"/install.sh
-}
-
-function setup-gnome-settings() {
-    # These seem to be exclusive to Ubuntu (maybe even Ubuntu 22.04)
-    # Wait for 1 second after each invocation as there is a slight delay before the settings
-    # get applied, otherwise the ones after the first one won't get applied
-
-    # Reset the layout of the app grid
-    /usr/bin/gsettings reset org.gnome.shell app-picker-layout && sleep 1
-
-    # Setup clock
-    /usr/bin/gsettings set org.gnome.desktop.interface clock-format 24h && sleep 1
-    /usr/bin/gsettings set org.gnome.desktop.interface clock-show-date true && sleep 1
-    /usr/bin/gsettings set org.gnome.desktop.interface clock-show-seconds true && sleep 1
-    /usr/bin/gsettings set org.gnome.desktop.interface clock-show-weekday true && sleep 1
-
-    # Set weather units
-    /usr/bin/gsettings set org.gnome.GWeather4 temperature-unit centigrade && sleep 1
-
-    # Do not attach mini windows to their parents
-    /usr/bin/gsettings set org.gnome.mutter attach-modal-dialogs false && sleep 1
-
-    # Set dark theme
-    /usr/bin/gsettings set org.gnome.desktop.interface color-scheme prefer-dark && sleep 1
-    /usr/bin/gsettings set org.gnome.desktop.interface gtk-theme Yaru-blue-dark && sleep 1
-    /usr/bin/gsettings set org.gnome.desktop.interface icon-theme Yaru-blue && sleep 1
-
-    # Enable hot corners
-    /usr/bin/gsettings set org.gnome.desktop.interface enable-hot-corners true && sleep 1
-
-    # Disable the third mouse button behaving like ctrl+v
-    /usr/bin/gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false && sleep 1
-
-    # Open new instances of the app when clicking the dock
-    /usr/bin/gsettings set org.gnome.shell.app-switcher current-workspace-only false && sleep 1
-
-    # Configure dock: auto hide, show at bottom, do not fill the screen
-    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false && sleep 1
-    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM && sleep 1
-    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false && sleep 1
-    # Hide not mounted disks (mounted disks will still show up)
-    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true && sleep 1
-    # Show on all screens
-    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock multi-monitor true && sleep 1
-    # Show the apps icons at the beginning of the dock, not at the end
-    /usr/bin/gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true && sleep 1
-
-    # Configure desktop icons
-    /usr/bin/gsettings set org.gnome.shell.extensions.ding start-corner top-left && sleep 1
-
-    # Ensure trackpads use the whole trackpad as trackpad and only two fingers as a secondary click
-    /usr/bin/gsettings set org.gnome.desktop.peripherals.touchpad click-method fingers && sleep 1
-
-    # Compose key allows to write tildes and the like
-    /usr/bin/gsettings set org.gnome.desktop.input-sources xkb-options "['compose:rctrl']" && sleep 1
-
-    # Keyboard shortcuts
-    /usr/bin/gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']" && sleep 1
-    /usr/bin/gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']" && sleep 1
 }
 
 function setup-flatpak-applications() {
