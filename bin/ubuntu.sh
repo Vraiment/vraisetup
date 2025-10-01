@@ -33,7 +33,6 @@ function main() {
     /usr/bin/xdg-settings set default-web-browser com.brave.Browser.desktop
 
     setup-command-line
-    setup-gnome-settings
     setup-flatpak-applications
 
     setup-appimages
@@ -308,27 +307,6 @@ function install-vraishell() {
     fi
 
     "$vraishell_dir"/install.sh
-}
-
-function setup-gnome-settings() {
-    # These seem to be exclusive to Ubuntu (maybe even Ubuntu 22.04)
-    # Wait for 1 second after each invocation as there is a slight delay before the settings
-    # get applied, otherwise the ones after the first one won't get applied
-
-    # Reset the layout of the app grid
-    /usr/bin/gsettings reset org.gnome.shell app-picker-layout && sleep 1
-
-    # Set weather units
-    /usr/bin/gsettings set org.gnome.GWeather4 temperature-unit centigrade && sleep 1
-
-    # Do not attach mini windows to their parents
-    /usr/bin/gsettings set org.gnome.mutter attach-modal-dialogs false && sleep 1
-
-    # Open new instances of the app when clicking the dock
-    /usr/bin/gsettings set org.gnome.shell.app-switcher current-workspace-only false && sleep 1
-
-    # Configure desktop icons
-    /usr/bin/gsettings set org.gnome.shell.extensions.ding start-corner top-left && sleep 1
 }
 
 function setup-flatpak-applications() {

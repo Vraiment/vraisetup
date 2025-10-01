@@ -1,6 +1,8 @@
 - name: Setup Gnome Desktop
   hosts: localhost
   tasks:
+    - name: Reset app picker
+      command: /usr/bin/dconf reset /org/gnome/shell/app-picker-layout
     - name: Interface setup
       block:
         - name: Reset interface settings
@@ -107,3 +109,23 @@
           community.general.dconf:
             key: /org/gnome/settings-daemon/plugins/media-keys/terminal
             value: "['<Super>t']"
+    - name: Desktop setup
+      block:
+        - name: Reset desktop settings
+          command: /usr/bin/dconf reset -f /org/gnome/shell/extensions/ding/
+        - name: Set the icons to start from the top left corner
+          community.general.dconf:
+            key: /org/gnome/shell/extensions/ding/start-corner
+            value: "'top-left'"
+    - name: Window manager
+      block:
+        - name: Reset window manager (mutter) settings
+          command: /usr/bin/dconf reset -f /org/gnome/mutter/
+        - name: Do not attach "mini windows" to their parents
+          community.general.dconf:
+            key: /org/gnome/mutter/attach-modal-dialogs
+            value: false
+    - name: Set temperature unit to celsius
+      community.general.dconf:
+        key: /org/gnome/GWeather/temperature-unit
+        value: "'centigrade'"
