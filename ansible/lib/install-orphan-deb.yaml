@@ -1,0 +1,49 @@
+# Installs a deb without an apt repository
+#
+# Required variables:
+# deb_url: The URL that stores the deb
+# deb_hash: The hash of the deb that's being downloaded
+- name: Create cache directory
+  file: 
+    path: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/debs"
+    state: directory
+- name: Install deb
+  block:
+    # Download regardless to have the deb cached locally
+    - name: Downloading {{ deb_url }}
+      get_url:
+        url: "{{ deb_url }}"
+        dest: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/deb"
+        checksum: "{{ deb_hash }}"
+        force: no
+      register: download
+    - name: Get package name
+      command: /usr/bin/dpkg --field "{{ download.dest }}" Package
+      register: package_name
+    - name: Get package version
+      command: /usr/bin/dpkg --field "{{ download.dest }}" Version
+      register: package_version
+    - name: Check if {{ package_name.stdout }} is installed
+      command: /usr/bin/dpkg --search "{{ package_name.stdout }}"
+      # If not installed, the command will fail, which is fine
+      ignore_errors: true
+      # `not package_installed.failed` means the package is sintalled
+      register: package_installed
+    - name: Get current version of {{ package_name.stdout }}
+      command: /usr/bin/dpkg-query --showformat='${Version}' --show {{ package_name.stdout }}
+      register: installed_version
+      when: not package_installed.failed
+    - name: Check if the an upgrade is needed
+      command: /usr/bin/dpkg --compare-versions {{ installed_version.stdout }} lt {{ package_version.stdout }}
+      # If the command fails then it means a newer version is installed, we shouldn't fail
+      ignore_errors: true
+      # `not upgrade_check.failed` means an upgrade is needed
+      register: upgrade_check
+      when: not package_installed.failed # Only check when the package is installed
+    - name: Install {{ package_name.stdout }} version {{ package_version.stdout }}
+      become: true
+      apt:
+        deb: "{{ download.dest }}"
+        update_cache: yes
+        state: present
+      when: package_installed.failed or not upgrade_check.failed
