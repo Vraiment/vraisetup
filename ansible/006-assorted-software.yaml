@@ -1,0 +1,44 @@
+- name: Assorted software
+  hosts: localhost
+  tasks:
+    - name: Install apt software
+      become: true
+      apt:
+        name:
+          - curl
+          - git
+          - hunspell-es # Spanish dictionary
+          - shellcheck
+          - vim
+          - wl-clipboard # Shellcheck
+        update_cache: yes
+        state: present
+    - name: Install sandboxed snap applications
+      community.general.snap:
+        name:
+          - snap-store
+          - spotify
+          - todoist
+          - vlc
+    - name: Install non sandboxed snap software
+      community.general.snap:
+        name:
+          - code
+        classic: false
+    - name: Install flatpak applications
+      community.general.flatpak:
+        state: present
+        method: user
+        name:
+          - app.devsuite.Ptyxis
+          - com.discordapp.Discord
+          - com.brave.Browser
+          - com.github.finefindus.eyedropper
+          - com.github.PintaProject.Pinta
+          - com.github.tchx84.Flatseal
+          - io.missioncenter.MissionCenter
+          - org.gimp.GIMP
+          - org.gnome.Boxes
+          - org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22 # The default Yaru version installed is 3.22
+          - org.libreoffice.LibreOffice
+          - org.mozilla.Thunderbird

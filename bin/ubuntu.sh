@@ -17,9 +17,6 @@ function main() {
 
     /usr/bin/mkdir --parents "$data_dir"
 
-    install-common-software-apt
-    install-common-software-snap
-    install-common-software-flatpak
     install-orphan-software
 
     install-scripting-runtimes
@@ -44,80 +41,6 @@ function ensure-sudo() {
     # this will make it so later calls will have credentials figured out
     /usr/bin/sudo --remove-timestamp
     /usr/bin/sudo /usr/bin/true
-}
-
-function install-common-software-apt() {
-    local software
-
-    configure-extra-apt-repositories
-
-    software=(
-        containerd.io # Required for Docker
-        curl
-        docker-buildx-plugin
-        docker-ce
-        docker-ce-cli
-        docker-compose-plugin
-        git
-        hunspell-es # Spanish dictionary
-        libfuse2 # Required for AppImages
-        shellcheck
-        vim
-        wl-clipboard # Copy&paste in the terminal
-    )
-    readonly software
-
-    /usr/bin/sudo /usr/bin/apt update
-    /usr/bin/sudo /usr/bin/apt upgrade --assume-yes
-    /usr/bin/sudo /usr/bin/apt autoremove --assume-yes
-    /usr/bin/sudo /usr/bin/apt install --assume-yes "${software[@]}"
-}
-
-function configure-extra-apt-repositories() {
-    # Use --no-preserve=mode,ownership,timestmap to ensure the
-    # permissions of the files are root's and not the current user
-
-    # Configure Docker, see the README on the docker dir
-    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
-        "$setup_root"/etc/docker/docker.list \
-        /etc/apt/sources.list.d/docker.list
-    /usr/bin/sudo /usr/bin/cp --no-preserve=mode,ownership,timestamp \
-        "$setup_root"/etc/docker/docker.asc \
-        /etc/apt/keyrings/docker.asc
-}
-
-function install-common-software-snap() {
-    # Each snap must be installed separately
-    # otherwise reruning the command will fail
-    /usr/bin/sudo /usr/bin/snap install code --classic
-    /usr/bin/sudo /usr/bin/snap install snap-store
-    /usr/bin/sudo /usr/bin/snap install spotify
-    /usr/bin/sudo /usr/bin/snap install todoist
-    /usr/bin/sudo /usr/bin/snap install vlc
-}
-
-function install-common-software-flatpak() {
-    local software
-
-    software=(
-        app.devsuite.Ptyxis
-        com.discordapp.Discord
-        com.brave.Browser
-        com.github.finefindus.eyedropper
-        com.github.PintaProject.Pinta
-        com.github.tchx84.Flatseal
-        io.missioncenter.MissionCenter
-        org.gimp.GIMP
-        org.gnome.Boxes
-        org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22 # The default Yaru version installed is 3.22
-        org.libreoffice.LibreOffice
-        org.mozilla.Thunderbird
-    )
-    readonly software
-
-    # Install system wide with sudo, this is because I don't want to use home
-    # directory storage on flatpak applications
-    /usr/bin/flatpak install --user --assumeyes "${software[@]}"
 }
 
 # "Orphan" software in this context referts to applications that are not
