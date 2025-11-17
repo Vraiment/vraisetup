@@ -66,5 +66,15 @@
     "editor.stickyScroll.enabled": false,
     // Controls whether show a "sticky" section at the top even after scrolling
     // Set to `false` because is extremely annoying, it rarely has helped me.
-    "terminal.integrated.stickyScroll.enabled": false
+    "terminal.integrated.stickyScroll.enabled": false,
+    // Disable VSCode integration, more noise than helpful
+    "terminal.integrated.shellIntegration.enabled": false,
+    // Ensure the shell is only bash and starts in interactive mode
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "args": ["-i"],
+            "icon": "terminal-bash"
+        }
+    }
 }
