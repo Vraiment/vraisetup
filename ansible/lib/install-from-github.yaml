@@ -1,0 +1,26 @@
+# Installs a script from GitHub
+#
+# Required variables:
+# repository: The repository of the script (ex: user/repo)
+# ref: The reference of the script (a commit or tag)
+# installer: The script to install
+# checksum_algorithm: The algorithm of the checksum
+# checksum: The checksum of the installer
+- name: Create cache directory for {{ repository }}/{{ ref }}
+  file:
+    path: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/github/{{ repository }}/{{ ref }}"
+    state: directory
+- name: Download script for {{ repository }}/{{ ref }}
+  get_url:
+    url: "https://raw.githubusercontent.com/{{ repository }}/{{ ref }}/{{ installer }}"
+    dest: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/github/{{ repository }}/{{ ref }}/"
+    checksum: "{{ checksum_algorithm }}:{{ checksum }}"
+    force: false
+    mode: 0755
+  register: download
+- name: Execute installer for {{ repository }}/{{ ref }}
+  shell: "{{ download.dest }}"
+  environment:
+    # `nvm` suggest setting `PROFILE` to `/dev/null` to prevent the script modifying
+    # shell scripts, my guess is this is a general hack and not specific to `nvm`
+    PROFILE: /dev/null
