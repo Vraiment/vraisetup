@@ -1,0 +1,17 @@
+- name: Setup command line
+  hosts: localhost
+  tasks:
+    - name: Install vimrc settings
+      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/vimrc \"{{ ansible_env.HOME }}\"/.vimrc"
+    - name: Install VraiShell
+      block:
+        - name: Create directory for VraiShell
+          file:
+            path: "{{ ansible_env.HOME }}/.local/src/vraishell"
+            state: directory
+        - name: Clone repository for VraiShell
+          git:
+            repo: https://github.com/Vraiment/vraishell.git
+            dest: "{{ ansible_env.HOME }}/.local/src/vraishell"
+        - name: Install VraiShell
+          command: "{{ ansible_env.HOME }}/.local/src/vraishell/install.sh"

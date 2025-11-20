@@ -24,7 +24,6 @@ function main() {
     # Set firefox as default browser
     /usr/bin/xdg-settings set default-web-browser com.brave.Browser.desktop
 
-    setup-command-line
     setup-flatpak-applications
 
     setup-appimages
@@ -37,27 +36,6 @@ function ensure-sudo() {
     # this will make it so later calls will have credentials figured out
     /usr/bin/sudo --remove-timestamp
     /usr/bin/sudo /usr/bin/true
-}
-
-function setup-command-line() {
-    /usr/bin/ln --symbolic --force --backup=numbered "$setup_root"/etc/vimrc "$HOME"/.vimrc
-
-    install-vraishell
-}
-
-function install-vraishell() {
-    local vraishell_dir
-
-    vraishell_dir="$HOME"/.local/src/vraishell
-    readonly vraishell_dir
-
-    if [ ! -d "$vraishell_dir" ]; then
-        # Ensure the parents of `$vraishell_dir` exist before cloning
-        /usr/bin/mkdir --parents "$(/usr/bin/dirname "$vraishell_dir")"
-        /usr/bin/git clone https://github.com/Vraiment/vraishell.git "$vraishell_dir"
-    fi
-
-    "$vraishell_dir"/install.sh
 }
 
 function setup-flatpak-applications() {
