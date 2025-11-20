@@ -17,10 +17,6 @@ function main() {
 
     /usr/bin/mkdir --parents "$data_dir"
 
-    # Enable "sudoless" `docker`
-    /usr/bin/sudo /usr/sbin/groupadd --force docker
-    /usr/bin/sudo /usr/sbin/usermod --append --groups docker "$USER"
-
     "$setup_root"/applications/vscode/install.sh
 }
 
