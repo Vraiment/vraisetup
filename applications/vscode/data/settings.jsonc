@@ -69,6 +69,12 @@
     "terminal.integrated.stickyScroll.enabled": false,
     // Disable VSCode integration, more noise than helpful
     "terminal.integrated.shellIntegration.enabled": false,
+    // Ensure the correct variables are set inside the terminal for Linux
+    // otherwise things like `podman` or `dconf` won't work.
+    "terminal.integrated.env.linux": {
+        "XDG_DATA_HOME": "${env:HOME}/.local/share",
+        "GSETTINGS_SCHEMA_DIR": "${env:HOME}/.local/share/glib-2.0/schemas"
+    },
     // Ensure the shell is only bash and starts in interactive mode
     "terminal.integrated.profiles.linux": {
         "bash": {
