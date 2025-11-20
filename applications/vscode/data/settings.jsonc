@@ -73,7 +73,7 @@
     "terminal.integrated.profiles.linux": {
         "bash": {
             "path": "bash",
-            "args": ["-i"],
+            "args": ["--login"],
             "icon": "terminal-bash"
         }
     }
