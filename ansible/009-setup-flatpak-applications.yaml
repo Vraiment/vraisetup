@@ -1,0 +1,9 @@
+- name: Setup flatpak applications
+  hosts: localhost
+  tasks:
+    - name: Set brave as the default browser
+      command: /usr/bin/xdg-settings set default-web-browser com.brave.Browser.desktop
+    - name: Set LibreOffice to dark mode
+      command: /usr/bin/flatpak override --user --env=GTK_THEME=Yaru-Blue-dark org.libreoffice.LibreOffice
+    - name: Ensure the calendar app starts on Monday
+      command: /usr/bin/flatpak override --user --env=LC_TIME=en_DK.UTF-8 org.gnome.Calendar

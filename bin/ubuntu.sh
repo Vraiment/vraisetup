@@ -21,11 +21,6 @@ function main() {
     /usr/bin/sudo /usr/sbin/groupadd --force docker
     /usr/bin/sudo /usr/sbin/usermod --append --groups docker "$USER"
 
-    # Set firefox as default browser
-    /usr/bin/xdg-settings set default-web-browser com.brave.Browser.desktop
-
-    setup-flatpak-applications
-
     setup-appimages
 
     "$setup_root"/applications/vscode/install.sh
@@ -36,25 +31,6 @@ function ensure-sudo() {
     # this will make it so later calls will have credentials figured out
     /usr/bin/sudo --remove-timestamp
     /usr/bin/sudo /usr/bin/true
-}
-
-function setup-flatpak-applications() {
-    local flatpak_with_custom_theme flatpaks_with_custom_theme
-
-    # These applications do not match the theme out of the box and need to be manually forced
-    # to the closest onet
-    flatpaks_with_custom_theme=(
-        org.libreoffice.LibreOffice
-    )
-    readonly flatpaks_with_custom_theme
-
-    for flatpak_with_custom_theme in "${flatpaks_with_custom_theme[@]}"; do
-        /usr/bin/flatpak override --user --env=GTK_THEME=Yaru-Blue-dark "$flatpak_with_custom_theme"
-    done
-
-    # Ensure weeks start on MOnday for Gnome calendar, en_DK should be identical
-    # with the exception of the start of the week
-    /usr/bin/flatpak override --user --env=LC_TIME=en_DK.UTF-8 org.gnome.Calendar
 }
 
 function setup-appimages() {
