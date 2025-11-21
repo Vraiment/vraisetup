@@ -82,5 +82,7 @@
             "args": ["--login"],
             "icon": "terminal-bash"
         }
-    }
+    },
+    // Disable all AI nonsense
+    "chat.disableAIFeatures": true
 }
