@@ -1,0 +1,12 @@
+- name: Setup flatpak applications
+  hosts: localhost
+  tasks:
+    - name: Read Ptyxis' data home directory
+      command: flatpak run --command=sh app.devsuite.Ptyxis -c 'echo "$XDG_DATA_HOME"'
+      register: ptyxis_data_home
+    - name: Create palettes directory
+      file:
+        path: "{{ ptyxis_data_home.stdout }}/app.devsuite.Ptyxis/palettes"
+        state: directory
+    - name: Symlink palettes
+      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/ptyxis/VraiTerminal.palette \"{{ ptyxis_data_home.stdout }}\"/app.devsuite.Ptyxis/palettes/"
