@@ -1,0 +1,22 @@
+- name: Setup flatpak applications
+  hosts: localhost
+  tasks:
+    - name: Install extensions
+      command: /snap/bin/code --install-extension "{{ item }}" --force
+      loop:
+        # UI Theme
+        - akamud.vscode-theme-onedark
+        # Icon Theme
+        - emmanuelbeziat.vscode-great-icons
+        # Pretty/Minify JSON
+        - eriklynd.json-tools
+        # URL Encode/Decode
+        - flesler.url-encode
+    - name: Create VSCode user directory
+      file:
+        path: "{{ ansible_env.HOME }}/.config/Code/User"
+        state: directory
+    - name: Symlink keybindings
+      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/vscode/keybindings.jsonc \"{{ ansible_env.HOME }}\"/.config/Code/User/keybindings.json"
+    - name: Symlink settings
+      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/vscode/settings.jsonc \"{{ ansible_env.HOME }}\"/.config/Code/User/settings.json"
