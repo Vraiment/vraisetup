@@ -8,6 +8,7 @@
           - curl
           - git
           - hunspell-es # Spanish dictionary
+          - podman
           - shellcheck
           - vim
           - wl-clipboard # Shellcheck
@@ -37,6 +38,7 @@
           - com.github.PintaProject.Pinta
           - com.github.tchx84.Flatseal
           - io.missioncenter.MissionCenter
+          - io.podman_desktop.PodmanDesktop
           - org.gimp.GIMP
           - org.gnome.Boxes
           - org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22 # The default Yaru version installed is 3.22
