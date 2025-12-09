@@ -1,6 +1,7 @@
 - name: Setup flatpak applications
   hosts: localhost
   tasks:
+    - name: Install VraiTerminal palette
     - name: Read Ptyxis' data home directory
       command: flatpak run --command=sh app.devsuite.Ptyxis -c 'echo "$XDG_DATA_HOME"'
       register: ptyxis_data_home
@@ -10,3 +11,15 @@
         state: directory
     - name: Symlink palettes
       command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/ptyxis/VraiTerminal.palette \"{{ ptyxis_data_home.stdout }}\"/app.devsuite.Ptyxis/palettes/"
+    # - name: Make it Pytxis the default terminal
+    #   block:
+    #     - name: Create XDG Terminals folder
+    #       file: "{{}}"
+
+
+# mkdir --parents "$HOME"/.local/share/flatpak/exports/share/xdg-terminals
+# The .desktop was originally at "$HOME"/.local/share/flatpak/exports/share/applications
+# cp "$HOME"/.local/share/flatpak/app/app.devsuite.Ptyxis/current/active/export/share/applications "$HOME"/.local/share/flatpak/exports/share/xdg-terminals
+# sudo apt install xdg-terminal-exec
+# echo 'app.devsuite.Ptyxis' > .config/ubuntu-xdg-terminals.list
+# TODO: https://ubuntuhandbook.org/index.php/2025/08/install-set-ptyxis-as-default-terminal-in-ubuntu-24-04-22-04/
