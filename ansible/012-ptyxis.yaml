@@ -35,15 +35,9 @@
             - "{{ ansible_env.HOME }}/.config/GNOME-xdg-terminals.list"
             - "{{ ansible_env.HOME }}/.config/ubuntu-xdg-terminals.list"
             - "{{ ansible_env.HOME }}/.config/xdg-terminals.list"
-        #sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/xdg-terminal-exec 100
-        #sudo update-alternatives --auto x-terminal-emulator
-
-        #sudo update-alternatives --config x-terminal-emulator (to display)
-        #
-
-# mkdir --parents "$HOME"/.local/share/flatpak/exports/share/xdg-terminals
-# The .desktop was originally at "$HOME"/.local/share/flatpak/exports/share/applications
-# cp "$HOME"/.local/share/flatpak/app/app.devsuite.Ptyxis/current/active/export/share/applications "$HOME"/.local/share/flatpak/exports/share/xdg-terminals
-# sudo apt install xdg-terminal-exec
-# echo 'app.devsuite.Ptyxis' > .config/ubuntu-xdg-terminals.list
-# TODO: https://ubuntuhandbook.org/index.php/2025/08/install-set-ptyxis-as-default-terminal-in-ubuntu-24-04-22-04/
+        - name: Add xdg-terminal-exec as an x-terminal-emulator alternative (for Ubuntu <= 25.04)
+          become: true
+          command: /usr/bin/update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/xdg-terminal-exec 100
+        - name: Set the x-terminal-emulator default to xdg-terminal-exec (for Ubuntu <= 25.04)
+          become: true
+          command: /usr/bin/update-alternatives --set x-terminal-emulator /usr/bin/xdg-terminal-exec
