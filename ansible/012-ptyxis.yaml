@@ -1,21 +1,45 @@
-- name: Setup flatpak applications
+- name: Setup Ptyxis
   hosts: localhost
   tasks:
+    - name: Install Ptyxis from flatpak
+      community.general.flatpak:
+        state: present
+        method: user
+        name:
+          - app.devsuite.Ptyxis
     - name: Install VraiTerminal palette
-    - name: Read Ptyxis' data home directory
-      command: flatpak run --command=sh app.devsuite.Ptyxis -c 'echo "$XDG_DATA_HOME"'
-      register: ptyxis_data_home
-    - name: Create palettes directory
-      file:
-        path: "{{ ptyxis_data_home.stdout }}/app.devsuite.Ptyxis/palettes"
-        state: directory
-    - name: Symlink palettes
-      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/ptyxis/VraiTerminal.palette \"{{ ptyxis_data_home.stdout }}\"/app.devsuite.Ptyxis/palettes/"
-    # - name: Make it Pytxis the default terminal
-    #   block:
-    #     - name: Create XDG Terminals folder
-    #       file: "{{}}"
+      block:
+      - name: Read Ptyxis' data home directory
+        command: flatpak run --command=sh app.devsuite.Ptyxis -c 'echo "$XDG_DATA_HOME"'
+        register: ptyxis_data_home
+      - name: Create palettes directory
+        file:
+          path: "{{ ptyxis_data_home.stdout }}/app.devsuite.Ptyxis/palettes"
+          state: directory
+      - name: Symlink palettes
+        command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/ptyxis/VraiTerminal.palette \"{{ ptyxis_data_home.stdout }}\"/app.devsuite.Ptyxis/palettes/"
+    - name: Make it Pytxis the default terminal
+      block:
+        - name: Install xdg-terminal-exec (for Ubuntu < 25.04)
+          become: true
+          apt:
+            name: xdg-terminal-exec
+            update_cache: yes
+            state: present
+        - name: Create XDG Terminals folder
+          copy:
+            dest: "{{ item }}"
+            content: |
+              app.devsuite.Ptyxis
+          loop:
+            - "{{ ansible_env.HOME }}/.config/GNOME-xdg-terminals.list"
+            - "{{ ansible_env.HOME }}/.config/ubuntu-xdg-terminals.list"
+            - "{{ ansible_env.HOME }}/.config/xdg-terminals.list"
+        #sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/xdg-terminal-exec 100
+        #sudo update-alternatives --auto x-terminal-emulator
 
+        #sudo update-alternatives --config x-terminal-emulator (to display)
+        #
 
 # mkdir --parents "$HOME"/.local/share/flatpak/exports/share/xdg-terminals
 # The .desktop was originally at "$HOME"/.local/share/flatpak/exports/share/applications
