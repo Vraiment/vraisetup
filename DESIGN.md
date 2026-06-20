@@ -5,33 +5,23 @@
 
 The propose of this repository is to be able to setup my standard environment with little to no effort by describing it in text files that are revision controlled. Ideally system level setup (ex: anything that needs `sudo`) would be described in a sort of container image and the user configuration via something less rigid, but given the container image approach is not valid at this time, using [Ansible](https://ansible.com) for everything sounds like a good compromise.
 
-## Approach
+## Wants
 
-I utilize multiple computers in my daily life, both at home and at work. Ideally both should work the same regardless of whether is a text only mode or a GUI and across multiple distributions. Additionally, some of these computers at work are [cattle servers](https://devops.stackexchange.com/a/654) which means I should be able to perform minimal text only setup remotely.
+### Cattle servers setup
 
-So the setup then boils down to the following environments:
+I utilize multiple computers in my daily life, both at home and at work. Ideally both should work the same regardless of whether is a text only mode or a GUI and across multiple distributions. Additionally, some of these computers at work are [cattle servers](https://devops.stackexchange.com/a/654) which means I should be able to perform minimal text only setup remotely. So for my command line setup I want a small set of portable runbooks that I can just and hit the ground running.
 
-1. Common TUI user level personalization.
-2. Common GUI personalization.
-    1. System level applications/infrastructure.
-    2. Individual user applications.
-3. Personal system level personalization.
-4. Personal GUI applications.
-    - This implies #2.
+These runbooks should list their minimal dependencies (for example: `ansible-playbook`). These can be called `tui-core` and for convenience a per-distro `tui-core-base` can exist to ensure the dependencies are available, ideally if `tui-core` has been already been setup and an update is required just running the `tui-core` playbooks should be enough, `tui-core-base` even if idempotent shouldn't be required to be rerun.
 
-That way, when I spin up a new instance at work or a virtual machine at home, I can just run the ansible setup for #1 and be ready to go. #3 and #4 should leverage technologies like Snap and Flatpak as much as possible to ensure they are portable.
+### GUI
 
-## Proposal
+For the GUI things are similar, multiple machines that I'd like to keep the same setup, but is more complicated given that this may be distribution and version dependent, specially for the system level components. User level components, specially relying on things like [AppImage](https://appimage.org) or [Flatpak](https://flatpak.org) are very portable and require no root access.
 
-The `ansible` directory is to contain 4 directories matching the list above, with the same order:
-
-- `0-common-tui`
-- `1-common-gui`
-- `3-personal-system`
-- `4-personal-gui-root`
-- `5-personal-gui`
-
-Note `3-personal-system` and `4-personal-gui` are the only entries to require root permissions, everything else should be able to be run as my own user. Note that these are distro specific as well, the rest should be extremely portable.
+Here are some desired qualities:
+    - The only dependency for these should be `ansible-playbook` as any additional dependency can be described with playbooks itself.
+    - It should be divided in two: system level setup and user level setup. Conceptually these should match the setup of a root partition (`/`) vs a home partition (`/home`).
+    - Each individual playbook should be focused on features, for example: being able to run `flatpak`.
+    - System level setup should be per distro and per version.
 
 ## About distribution platforms
 
@@ -40,4 +30,3 @@ Acquiring software from upstream is a highly desired characteristic as it cuts t
 A second highly desirable feture is portability, for GUI applications this is accomplished using one of the universal formats ([AppImage](https://appimage.org), [Flatpak](https://flatpak.org) and [Snap](https://snapcraft.io)). The primary option is Flatpak with its autoupdate feature and integration with desktop environments and highly configurable sandbox. The next option is Snap which continues the auto update feature. The last preference is AppImage which lacks built in autoupdate but some applications may include it.
 
 If an application is not officially shipped in a portable format then the non portable format is preferred, again to cut the middlmen.
-
