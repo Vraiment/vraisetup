@@ -1,4 +1,4 @@
-- name: Setup flatpak applications
+- name: Configure VSCode
   hosts: localhost
   tasks:
     - name: Install extensions
