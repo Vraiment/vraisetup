@@ -1,0 +1,11 @@
+- name: Setup Brave
+  hosts: localhost
+  tasks:
+    - name: Install Brave
+      community.general.flatpak:
+        state: present
+        method: user
+        name:
+          - com.brave.Browser
+    - name: Set brave as the default browser
+      command: /usr/bin/xdg-settings set default-web-browser com.brave.Browser.desktop
