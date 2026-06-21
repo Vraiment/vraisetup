@@ -1,0 +1,13 @@
+- name: Setup LibeOffice
+  hosts: localhost
+  tasks:
+    - name: Install Brave
+      community.general.flatpak:
+        state: present
+        method: user
+        name:
+          # # The default Yaru version installed is 3.22
+          - org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22
+          - org.libreoffice.LibreOffice
+    - name: Set LibreOffice to dark mode
+      command: /usr/bin/flatpak override --user --env=GTK_THEME=Yaru-Blue-dark org.libreoffice.LibreOffice
