@@ -23,4 +23,6 @@
           # # The default Yaru version installed is 3.22
           - org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22
           - org.libreoffice.LibreOffice
+          #  I still have some data on Firefox so I keep it installed
+          - org.mozilla.firefox
           - org.mozilla.Thunderbird

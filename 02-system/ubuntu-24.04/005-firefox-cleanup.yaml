@@ -1,5 +1,3 @@
-# I still have some data on Firefox so I keep it installed but I prefer the
-# flathub version, which is the officially provided by Mozilla.
 - name: Firefox cleanup
   hosts: localhost
   tasks:
@@ -15,8 +13,3 @@
       community.general.snap:
         name: firefox
         state: absent
-    - name: Install flatpak version
-      community.general.flatpak:
-        state: present
-        method: user
-        name: org.mozilla.firefox
