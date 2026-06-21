@@ -1,0 +1,26 @@
+# While not ideal to have a "misc" playbook, this one should be short and sweet.
+# Any Flatpak application that doesn't need custom setup goes here. If anything
+# needs custom setup or has a more relevant grouping goes to its own file.
+# Things can be moved in or out of here as needed.
+- name: Flatpak applications
+  hosts: localhost
+  tasks:
+    - name: Install flatpak applications
+      community.general.flatpak:
+        state: present
+        method: user
+        name:
+          - app.devsuite.Ptyxis
+          - com.brave.Browser
+          - com.discordapp.Discord
+          - com.github.finefindus.eyedropper
+          - com.github.PintaProject.Pinta
+          - com.github.tchx84.Flatseal
+          - io.missioncenter.MissionCenter
+          - io.podman_desktop.PodmanDesktop
+          - org.gimp.GIMP
+          - org.gnome.Boxes
+          # # The default Yaru version installed is 3.22
+          - org.gtk.Gtk3theme.Yaru-Blue-dark/x86_64/3.22
+          - org.libreoffice.LibreOffice
+          - org.mozilla.Thunderbird
