@@ -1,4 +1,6 @@
-- name: Gnome applications
+# This playbook is to "Install the Gnome desktop" so to speak, (useful) Gnome
+# applications go here
+- name: Install Gnome applications
   hosts: localhost
   tasks:
     - name: Install from flatpak
