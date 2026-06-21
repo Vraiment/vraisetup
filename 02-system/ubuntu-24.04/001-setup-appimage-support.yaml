@@ -1,4 +1,4 @@
-- name: Setup flatpak applications
+- name: Setup AppImage support
   hosts: localhost
   tasks:
     # Allows AppImages to be placed under `$HOME/Applications/*.AppImage`
@@ -20,4 +20,3 @@
     - name: Reload AppArmor
       become: true
       command: /usr/bin/systemctl reload apparmor
-    # TODO: Add `appimaged`
