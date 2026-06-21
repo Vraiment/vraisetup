@@ -1,0 +1,12 @@
+- name: Make weeks start on Monday
+  hosts: localhost
+  tasks:
+    - name: Weeks Start On Monday extension
+      block:
+        - import_tasks: ../common/gnome-extension.yaml
+          vars:
+                extension_id: weeks-start-on-monday@extensions.gnome-shell.fifi.org
+                extension_version: 22
+                extension_hash: sha256:2e2a57c953ef9ebdf708f04f86a5e301c373fee4b62e40135a913a5e84b366f5
+    - name: Ensure the calendar app starts on Monday
+      command: /usr/bin/flatpak override --user --env=LC_TIME=en_DK.UTF-8 org.gnome.Calendar
