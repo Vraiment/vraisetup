@@ -1,7 +1,7 @@
-- name: Setup flatpak applications
+- name: Setup Ptyxis
   hosts: localhost
   tasks:
-    - name: Install Brave
+    - name: Install Ptyxis
       community.general.flatpak:
         state: present
         method: user
