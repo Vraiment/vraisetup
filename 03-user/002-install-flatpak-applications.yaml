@@ -2,7 +2,7 @@
 # Any Flatpak application that doesn't need custom setup goes here. If anything
 # needs custom setup or has a more relevant grouping goes to its own file.
 # Things can be moved in or out of here as needed.
-- name: Flatpak applications
+- name: Install flatpak applications
   hosts: localhost
   tasks:
     - name: Install flatpak applications
