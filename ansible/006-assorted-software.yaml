@@ -27,7 +27,7 @@
         # that version is literally useless for me.
         - name: naps2
           block:
-            - import_tasks: lib/install-orphan-deb.yaml
+            - import_tasks: ../common/install-orphan-deb.yaml
               vars:
                 naps2_version: 8.2.1
                 deb_url: https://github.com/cyanfish/naps2/releases/download/v{{ naps2_version }}/naps2-{{ naps2_version }}-linux-x64.deb
@@ -35,7 +35,7 @@
                 deb_hash: sha256:8e23c4a6d7f0b75512459cc29a639ec395355f222375291ed674525c7c9cd4b7
         - name: Steam
           block:
-            - import_tasks: lib/install-orphan-deb.yaml
+            - import_tasks: ../common/install-orphan-deb.yaml
               vars:
                 steam_version: 1.0.0.81
                 deb_url: https://repo.steampowered.com/steam/archive/stable/steam-launcher_{{ steam_version }}_all.deb

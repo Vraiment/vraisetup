@@ -131,14 +131,14 @@
         value: "'centigrade'"
     - name: GSConnect extension
       block:
-        - import_tasks: lib/gnome-extension.yaml
+        - import_tasks: ../common/gnome-extension.yaml
           vars:
                 extension_id: gsconnect@andyholmes.github.io
                 extension_version: 67
                 extension_hash: sha256:430acd022af115d3678a5540d1fa78dc5148cf0822a2a9d80cb9bcc1b19d916d
     - name: Weeks Start On Monday extension
       block:
-        - import_tasks: lib/gnome-extension.yaml
+        - import_tasks: ../common/gnome-extension.yaml
           vars:
                 extension_id: weeks-start-on-monday@extensions.gnome-shell.fifi.org
                 extension_version: 22

@@ -3,7 +3,7 @@
   tasks:
     - name: nvm
       block:
-        - import_tasks: lib/install-from-github.yaml
+        - import_tasks: ../common/install-from-github.yaml
           vars:
             repository: nvm-sh/nvm
             ref: v0.39.5
@@ -13,7 +13,7 @@
             checksum: 69da4f89f430cd5d6e591c2ccfa2e9e3ad55564ba60f651f00da85e04010c640
     - name: rbenv
       block:
-        - import_tasks: lib/install-from-github.yaml
+        - import_tasks: ../common/install-from-github.yaml
           vars:
             repository: rbenv/rbenv-installer
             ref: 33926644327c067be973c8e1c6c4f5c2178d4ead
