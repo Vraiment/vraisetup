@@ -21,4 +21,3 @@
           - org.gnome.Boxes
           #  I still have some data on Firefox so I keep it installed
           - org.mozilla.firefox
-          - org.mozilla.Thunderbird

@@ -9,7 +9,6 @@
       become: true
       apt:
         name:
-          - hunspell-es # Spanish dictionary
           - podman
         update_cache: yes
         state: present
