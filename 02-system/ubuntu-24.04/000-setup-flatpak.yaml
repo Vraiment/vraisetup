@@ -1,4 +1,4 @@
-- name: Flatpak setup
+- name: Setup flatpak
   hosts: localhost
   tasks:
     - name: Install Flatpak from repositories
@@ -30,11 +30,3 @@
     - name: Reload AppArmor
       become: true
       command: /usr/bin/systemctl reload apparmor
-    - name: Setup Flathub
-      community.general.flatpak_remote:
-        name: flathub
-        state: present
-        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-        method: user
-    - name: Add mexican spanish
-      command: /usr/bin/flatpak config --user --set extra-languages es_MX

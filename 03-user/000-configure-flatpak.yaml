@@ -1,0 +1,11 @@
+- name: Configure flatpak
+  hosts: localhost
+  tasks:
+    - name: Setup Flathub
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+        method: user
+    - name: Add mexican spanish
+      command: /usr/bin/flatpak config --user --set extra-languages es_MX
