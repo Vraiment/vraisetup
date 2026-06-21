@@ -1,0 +1,11 @@
+- name: Setup Gnome desktop
+  hosts: localhost
+  tasks:
+    - name: Install apt only applications
+      become: true
+      apt:
+        name:
+          - gnome-sushi # Preview files from Nautilus
+          - gnome-tweaks
+        update_cache: yes
+        state: present
