@@ -5,13 +5,8 @@
       become: true
       apt:
         name:
-          - curl
-          - git
           - hunspell-es # Spanish dictionary
           - podman
-          - shellcheck
-          - vim
-          - wl-clipboard # Shellcheck
         update_cache: yes
         state: present
     - name: Install sandboxed snap applications

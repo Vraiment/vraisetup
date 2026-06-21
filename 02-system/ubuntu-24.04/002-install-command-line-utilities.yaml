@@ -1,0 +1,17 @@
+# This playbook contains a minimal set of utilities to be able to do everyday
+# tasks
+- name: Command line utilities
+  hosts: localhost
+  tasks:
+    - name: Install apt software
+      become: true
+      apt:
+        name:
+          - curl # Perform HTTP requests
+          - git # Fetching software
+          - shellcheck # Shell linter
+          - vim # Text editor
+          - wget # Download HTTP endpoints
+          - wl-clipboard # Clipboard interaction
+        update_cache: yes
+        state: present
