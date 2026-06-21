@@ -10,7 +10,6 @@
         state: present
         method: user
         name:
-          - app.devsuite.Ptyxis
           - com.brave.Browser
           - com.discordapp.Discord
           - com.github.finefindus.eyedropper

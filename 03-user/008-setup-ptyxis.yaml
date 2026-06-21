@@ -1,6 +1,12 @@
 - name: Setup flatpak applications
   hosts: localhost
   tasks:
+    - name: Install Brave
+      community.general.flatpak:
+        state: present
+        method: user
+        name:
+          - app.devsuite.Ptyxis
     - name: Read Ptyxis' data home directory
       command: flatpak run --command=sh app.devsuite.Ptyxis -c 'echo "$XDG_DATA_HOME"'
       register: ptyxis_data_home
