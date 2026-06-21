@@ -1,4 +1,4 @@
-- name: Install scripting runtimes
+- name: Download scripting runtimes installers
   hosts: localhost
   tasks:
     - name: nvm
