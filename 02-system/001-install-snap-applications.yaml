@@ -1,0 +1,19 @@
+# While not ideal to have a "misc" playbook, this one should be short and sweet.
+# Any Snap application that doesn't need custom setup goes here. If anything
+# needs custom setup or has a more relevant grouping goes to its own file.
+# Things can be moved in or out of here as needed.
+- name: Install flatpak applications
+  hosts: localhost
+  tasks:
+    - name: Install sandboxed snap applications
+      community.general.snap:
+        name:
+          - snap-store
+          - spotify
+          - todoist
+          - vlc
+    - name: Install non sandboxed snap software
+      community.general.snap:
+        name:
+          - code
+        classic: false
