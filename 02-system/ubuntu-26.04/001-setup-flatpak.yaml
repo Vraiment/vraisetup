@@ -1,0 +1,12 @@
+- name: Setup flatpak
+  hosts: localhost
+  tasks:
+    - name: Install Flatpak from repositories
+      become: true
+      apt:
+        name:
+          - flatpak
+          - gnome-software
+          - gnome-software-plugin-flatpak
+        update_cache: yes
+        state: present

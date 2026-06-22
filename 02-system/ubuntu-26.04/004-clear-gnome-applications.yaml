@@ -1,0 +1,34 @@
+# These applications are installed at the system level and hence they are bound
+# to stop receiving updates unless they are critical, so instead the Flatpak
+# versions will be used.
+- name: Clear Gnome applications
+  hosts: localhost
+  tasks:
+    - name: Remove apt based applications
+      become: true
+      apt:
+        name:
+          - baobab
+          - cheese
+          - eog
+          - epiphany-browser
+          - evince
+          - gedit
+          - gnome-calculator
+          - gnome-characters
+          - gnome-clocks
+          - gnome-contacts
+          - gnome-font-viewer
+          - gnome-logs
+          - gnome-maps
+          - gnome-power-manager
+          - gnome-snapshot
+          - gnome-text-editor
+          - gnome-weather
+          - loupe
+          - papers
+          - resources # Technically not a Gnome application
+          - showtime
+        state: absent
+        purge: true
+        autoremove: true

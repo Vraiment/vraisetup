@@ -1,0 +1,29 @@
+- name: Setup AppImage support
+  hosts: localhost
+  tasks:
+    - name: Install required libraries
+      become: true
+      apt:
+        name:
+          - libfuse2t64
+        update_cache: yes
+        state: present
+    # Allows AppImages to be placed under `$HOME/Applications/*.AppImage`
+    - name: Setup AppArmor for Flatpak
+      become: true
+      copy:
+        dest: /etc/apparmor.d/userappimages
+        content: |
+          abi <abi/4.0>,
+          include <tunables/global>
+
+          profile userappimages @{HOME}/Applications/*.AppImage flags=(default_allow) {
+            userns,
+
+            # Site-specific additions and overrides. See local/README for details.
+            include if exists <local/userappimages>
+          }
+        mode: "0644"
+    - name: Reload AppArmor
+      become: true
+      command: /usr/bin/systemctl reload apparmor

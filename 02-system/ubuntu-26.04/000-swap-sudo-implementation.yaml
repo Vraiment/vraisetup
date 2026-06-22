@@ -1,0 +1,13 @@
+# Because Ubuntu 26.04 changed to `sudo-rs` by default, `sudo.ws` needs to be
+# manually selected as the altnerative by default once.
+# See https://github.com/ansible/ansible/issues/85837
+- name: Setup flatpak
+  hosts: localhost
+  vars:
+    ansible_become_exe: sudo.ws
+  tasks:
+    - name: Set sudo.ws as the sudo alternative
+      become: true
+      community.general.alternatives:
+        name: sudo
+        path: /usr/bin/sudo.ws
