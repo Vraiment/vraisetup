@@ -8,12 +8,12 @@
 # checksum: The checksum of the installer
 - name: Create cache directory for {{ repository }}/{{ ref }}
   file:
-    path: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/github/{{ repository }}/{{ ref }}"
+    path: "{{ ansible_facts.env.HOME }}/.local/var/cache/vraisetup/github/{{ repository }}/{{ ref }}"
     state: directory
 - name: Download script for {{ repository }}/{{ ref }}
   get_url:
     url: "https://raw.githubusercontent.com/{{ repository }}/{{ ref }}/{{ installer }}"
-    dest: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/github/{{ repository }}/{{ ref }}/"
+    dest: "{{ ansible_facts.env.HOME }}/.local/var/cache/vraisetup/github/{{ repository }}/{{ ref }}/"
     checksum: "{{ checksum_algorithm }}:{{ checksum }}"
     force: false
     mode: 0755

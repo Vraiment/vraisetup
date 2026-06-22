@@ -5,7 +5,7 @@
 # deb_hash: The hash of the deb that's being downloaded
 - name: Create cache directory
   file: 
-    path: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/debs"
+    path: "{{ ansible_facts.env.HOME }}/.local/var/cache/vraisetup/debs"
     state: directory
 - name: Install deb
   block:
@@ -13,7 +13,7 @@
     - name: Downloading {{ deb_url }}
       get_url:
         url: "{{ deb_url }}"
-        dest: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/deb"
+        dest: "{{ ansible_facts.env.HOME }}/.local/var/cache/vraisetup/deb"
         checksum: "{{ deb_hash }}"
         force: no
       register: download

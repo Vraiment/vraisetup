@@ -4,7 +4,7 @@
 # extension_hash: The hash of the extension archive
 - name: Create cache directory
   file:
-    path: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/gnome-extensions"
+    path: "{{ ansible_facts.env.HOME }}/.local/var/cache/vraisetup/gnome-extensions"
     state: directory
 - name: Setup extension {{ extension_id }}
   block:
@@ -12,7 +12,7 @@
     - name: Download {{ extension_id }} v{{ extension_version }}
       get_url:
         url: https://extensions.gnome.org/extension-data/{{ extension_id | replace('@', '') }}.v{{ extension_version }}.shell-extension.zip
-        dest: "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/gnome-extensions"
+        dest: "{{ ansible_facts.env.HOME }}/.local/var/cache/vraisetup/gnome-extensions"
         checksum: "{{ extension_hash }}"
         force: no
     - name: Get current version of {{ extension_id }}
@@ -26,7 +26,7 @@
     - when: current_extension_version.stdout | int < extension_version
       block:
       - name: Install {{ extension_id }} v{{ extension_version }}
-        command: /usr/bin/gnome-extensions install --force "{{ ansible_env.HOME }}/.local/var/cache/vraisetup/gnome-extensions/{{ extension_id | replace('@', '') }}.v{{ extension_version }}.shell-extension.zip"
+        command: /usr/bin/gnome-extensions install --force "{{ ansible_facts.env.HOME }}/.local/var/cache/vraisetup/gnome-extensions/{{ extension_id | replace('@', '') }}.v{{ extension_version }}.shell-extension.zip"
       - name: Enable {{ extension_id }} v{{ extension_version }}
         command: /usr/bin/gnome-extensions enable {{ extension_id }}
         # For whatever reason Ubuntu 24.04 won't detect new extensions until the next login

@@ -14,9 +14,9 @@
         - flesler.url-encode
     - name: Create VSCode user directory
       file:
-        path: "{{ ansible_env.HOME }}/.config/Code/User"
+        path: "{{ ansible_facts.env.HOME }}/.config/Code/User"
         state: directory
     - name: Symlink keybindings
-      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/vscode/keybindings.jsonc \"{{ ansible_env.HOME }}\"/.config/Code/User/keybindings.json"
+      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/vscode/keybindings.jsonc \"{{ ansible_facts.env.HOME }}\"/.config/Code/User/keybindings.json"
     - name: Symlink settings
-      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/vscode/settings.jsonc \"{{ ansible_env.HOME }}\"/.config/Code/User/settings.json"
+      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/vscode/settings.jsonc \"{{ ansible_facts.env.HOME }}\"/.config/Code/User/settings.json"

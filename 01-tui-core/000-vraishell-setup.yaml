@@ -5,11 +5,11 @@
       block:
         - name: Create directory for VraiShell
           file:
-            path: "{{ ansible_env.HOME }}/.local/src/vraishell"
+            path: "{{ ansible_facts.env.HOME }}/.local/src/vraishell"
             state: directory
         - name: Clone repository for VraiShell
           git:
             repo: https://github.com/Vraiment/vraishell.git
-            dest: "{{ ansible_env.HOME }}/.local/src/vraishell"
+            dest: "{{ ansible_facts.env.HOME }}/.local/src/vraishell"
         - name: Install VraiShell
-          command: "{{ ansible_env.HOME }}/.local/src/vraishell/install.sh"
+          command: "{{ ansible_facts.env.HOME }}/.local/src/vraishell/install.sh"

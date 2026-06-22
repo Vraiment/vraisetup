@@ -2,4 +2,4 @@
   hosts: localhost
   tasks:
     - name: Install vimrc settings
-      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/vimrc \"{{ ansible_env.HOME }}\"/.vimrc"
+      command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/vimrc \"{{ ansible_facts.env.HOME }}\"/.vimrc"
