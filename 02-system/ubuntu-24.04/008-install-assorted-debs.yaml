@@ -28,7 +28,7 @@
           block:
             - import_tasks: ../../common/install-orphan-deb.yaml
               vars:
-                steam_version: 1.0.0.81
-                deb_url: https://repo.steampowered.com/steam/archive/stable/steam-launcher_{{ steam_version }}_all.deb
-                # Install Simplenote, sha256sum calculated Jun 02nd, 2025
-                deb_hash: sha256:afd2b922f9771a9ca7ee0cb416bdd4fceabf3e75a2c5b65f654a10419762960d
+                steam_version: 1.0.0.85
+                deb_url: https://repo.steampowered.com/steam/archive/stable/steam-launcher_{{ steam_version }}_amd64.deb
+                # Install Simplenote, sha256sum calculated Jun 22st, 2026
+                deb_hash: sha256:b44634a6a604ca7c8b23809d0f2a921a0348bb2081c8cb8944116d0799872b70
