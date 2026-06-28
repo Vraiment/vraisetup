@@ -111,6 +111,22 @@
           community.general.dconf:
             key: /org/gnome/desktop/peripherals/touchpad/click-method
             value: "'fingers'"
+        - name: Maximize with Super + Up
+          community.general.dconf:
+            key: /org/gnome/desktop/wm/keybindings/maximize
+            value: "['<Super>Up']"
+        - name: Restore with Super + Down
+          community.general.dconf:
+            key: /org/gnome/desktop/wm/keybindings/unmaximize
+            value: "['<Super>Down']"
+        - name: Move window to the left with Super + Left
+          community.general.dconf:
+            key: /org/gnome/mutter/keybindings/toggle-tiled-left
+            value: "['<Super>Left']"
+        - name: Move window to the left with Super + Right
+          community.general.dconf:
+            key: /org/gnome/mutter/keybindings/toggle-tiled-right
+            value: "['<Super>Right']"
         - name: Reset media keys shortcuts
           command: /usr/bin/dconf reset -f /org/gnome/settings-daemon/plugins/media-keys/
         - name: Open home folder with Super+f
