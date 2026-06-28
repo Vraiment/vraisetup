@@ -25,6 +25,18 @@
             community.general.dconf:
               key: /org/gnome/desktop/interface/clock-show-weekday
               value: true
+          - name: Show weeknumbers
+            community.general.dconf:
+              key: /org/gnome/desktop/calendar/show-weekdate
+              value: true
+          - name: First day of the week is Monday # Requires Gnome > 50
+            community.general.dconf:
+              key: /org/gnome/desktop/calendar/week-start-day
+              value: 'monday'
+          - name: Show battery percentage (if battery is shown)
+            community.general.dconf:
+              key: /org/gnome/desktop/interface/show-battery-percentage
+              value: true
         - name: Set theme
           block:
           - name: Enable dark mode
@@ -38,7 +50,7 @@
           - name: Set blue icons
             community.general.dconf:
               key: /org/gnome/desktop/interface/icon-theme
-              value: "'Yaru-blue'"
+              value: "'Yaru-blue-dark'"
         - name: Misc behavior
           block:
           - name: Enable hot corners
@@ -127,7 +139,7 @@
             value: false
     - name: Set temperature unit to celsius
       community.general.dconf:
-        key: /org/gnome/GWeather/temperature-unit
+        key: /org/gnome/GWeather4/temperature-unit
         value: "'centigrade'"
     - name: GSConnect extension
       block:
