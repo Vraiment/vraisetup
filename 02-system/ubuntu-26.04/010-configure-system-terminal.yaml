@@ -1,0 +1,22 @@
+- name: Configure system terminal
+  hosts: localhost
+  tasks:
+    - name: Install xdg-terminal-exec
+      become: true
+      apt:
+        name: xdg-terminal-exec
+        update_cache: yes
+        state: present
+    - name: Add xdg-terminal-exec as an x-terminal-emulator alternative
+      become: true
+      command: /usr/bin/update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/xdg-terminal-exec 100 --slave /usr/share/man/man1/x-terminal-emulator.1.gz x-terminal-emulator.1.gz /usr/share/man/man1/xdg-terminal-exec.1.gz
+    - name: Set the x-terminal-emulator default to xdg-terminal-exec
+      become: true
+      command: /usr/bin/update-alternatives --set x-terminal-emulator /usr/bin/xdg-terminal-exec
+    - name: Remove system level Ptyxis
+      become: true
+      apt:
+        name: ptyxis
+        state: absent
+        purge: true
+        autoremove: true

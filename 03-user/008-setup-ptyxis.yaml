@@ -16,3 +16,22 @@
         state: directory
     - name: Symlink palettes
       command: "/usr/bin/ln --symbolic --force --backup=numbered \"{{ playbook_dir }}\"/etc/ptyxis/VraiTerminal.palette \"{{ ptyxis_data_home.stdout }}\"/app.devsuite.Ptyxis/palettes/"
+    - name: Make Ptyxis the default terminal
+      block:
+        - name: Create XDG terminals list
+          copy:
+            dest: "{{ ansible_facts.env.HOME }}/.config/xdg-terminals.list"
+            # Use the `new-window` action to ensure anything raises to the front
+            # if `new-tab` or no action is used then the window is kept on the
+            # background if is not at the forefront
+            content: |
+              app.devsuite.Ptyxis.desktop:new-window
+        - name: Symlink XDG terminals lists
+          file:
+            src: "{{ ansible_facts.env.HOME }}/.config/xdg-terminals.list"
+            dest: "{{ item }}"
+            state: hard
+            force: true
+          loop:
+            - "{{ ansible_facts.env.HOME }}/.config/GNOME-xdg-terminals.list"
+            - "{{ ansible_facts.env.HOME }}/.config/ubuntu-xdg-terminals.list"
