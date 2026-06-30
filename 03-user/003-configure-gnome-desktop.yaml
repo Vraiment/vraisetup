@@ -32,7 +32,7 @@
           - name: First day of the week is Monday # Requires Gnome > 50
             community.general.dconf:
               key: /org/gnome/desktop/calendar/week-start-day
-              value: 'monday'
+              value: "'monday'"
           - name: Show battery percentage (if battery is shown)
             community.general.dconf:
               key: /org/gnome/desktop/interface/show-battery-percentage
