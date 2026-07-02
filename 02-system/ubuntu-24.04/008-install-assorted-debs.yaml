@@ -32,3 +32,11 @@
                 deb_url: https://repo.steampowered.com/steam/archive/stable/steam-launcher_{{ steam_version }}_amd64.deb
                 # Install Steam, sha256sum calculated Jun 22st, 2026
                 deb_hash: sha256:b44634a6a604ca7c8b23809d0f2a921a0348bb2081c8cb8944116d0799872b70
+        - name: brscan5
+          block:
+            - import_tasks: ../../common/install-orphan-deb.yaml
+              vars:
+                brscan5_version: 1.7.0-0
+                deb_url: https://download.brother.com/welcome/dlf104033/brscan5-{{ brscan5_version }}.amd64.deb
+                # Install brscan5, sha256sum calculated Jul 1st, 2026
+                deb_hash: sha256:9c3a200db3dc7b2b3332dff8c5226b4f3ee560d20b2e1f4918b1faf7124517b2
