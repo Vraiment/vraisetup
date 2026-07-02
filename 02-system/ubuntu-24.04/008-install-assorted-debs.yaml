@@ -30,5 +30,5 @@
               vars:
                 steam_version: 1.0.0.85
                 deb_url: https://repo.steampowered.com/steam/archive/stable/steam-launcher_{{ steam_version }}_amd64.deb
-                # Install Simplenote, sha256sum calculated Jun 22st, 2026
+                # Install Steam, sha256sum calculated Jun 22st, 2026
                 deb_hash: sha256:b44634a6a604ca7c8b23809d0f2a921a0348bb2081c8cb8944116d0799872b70
