@@ -37,6 +37,6 @@
             - import_tasks: ../../common/install-orphan-deb.yaml
               vars:
                 brscan5_version: 1.7.0-0
-                deb_url: https://download.brother.com/welcome/dlf104033/brscan5-{{ brscan5_version }}.amd64.deb
+                deb_url: https://download.brother.com/pub/com/linux/linux/packages/brscan5-{{ brscan5_version }}.amd64.deb
                 # Install brscan5, sha256sum calculated Jul 1st, 2026
                 deb_hash: sha256:9c3a200db3dc7b2b3332dff8c5226b4f3ee560d20b2e1f4918b1faf7124517b2
