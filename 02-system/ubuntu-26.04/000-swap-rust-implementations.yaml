@@ -1,0 +1,32 @@
+# Because Ubuntu 26.04 changed to `sudo-rs` by default, `sudo.ws` needs to be
+# manually selected as the altnerative by default once.
+# See https://github.com/ansible/ansible/issues/85837
+- name: Swap Rust implementations
+  hosts: localhost
+  vars:
+    ansible_become_exe: sudo.ws
+  tasks:
+    - name: Set sudo.ws as the sudo alternative
+      become: true
+      community.general.alternatives:
+        name: sudo
+        path: /usr/bin/sudo.ws
+    # https://blobfolio.com/2025/revert-to-gnu-coreutils
+    - name: Swap to GNU's coreutils
+      block:
+        - name: Update apt cache
+          become: true
+          apt:
+            update_cache: true
+        - name: Remove uutils (Rust coreutils)
+          become: true
+          command: /usr/bin/apt-get remove --yes --allow-remove-essential coreutils-from-uutils
+        - name: Pin GNU coreutils
+          become: true
+          copy:
+            dest: /etc/apt/preferences.d/uutils
+            content: |
+              Package: coreutils-from-uutils
+              Pin: release a=*
+              Pin-Priority: -10
+            mode: "0644"
