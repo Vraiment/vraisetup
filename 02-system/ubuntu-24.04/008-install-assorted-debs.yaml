@@ -20,10 +20,10 @@
           block:
             - import_tasks: ../../common/install-orphan-deb.yaml
               vars:
-                naps2_version: 8.2.1
+                naps2_version: 8.3.2
                 deb_url: https://github.com/cyanfish/naps2/releases/download/v{{ naps2_version }}/naps2-{{ naps2_version }}-linux-x64.deb
-                # Install NAPS2, sha256sum calculated Sep 01st, 2025
-                deb_hash: sha256:8e23c4a6d7f0b75512459cc29a639ec395355f222375291ed674525c7c9cd4b7
+                # Install NAPS2, sha256sum calculated Aug 01st, 2026
+                deb_hash: sha256:fd653b1caea6d076d19a3dcaa14e9f1091ae9267ac84c0379d4766f4a339fe12
         - name: Steam
           block:
             - import_tasks: ../../common/install-orphan-deb.yaml
